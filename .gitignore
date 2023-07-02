@@ -34,3 +34,6 @@ build/
 
 ### Maven ###
 .mvn
+
+### Local Cheat Sheet, etc. ###
+*.local.txt
