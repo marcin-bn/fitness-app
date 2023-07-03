@@ -24,6 +24,10 @@ public class User {
 
     @Getter
     @NonNull
+    private String username;
+
+    @Getter
+    @NonNull
     private String password;
 
     public static User withId(
@@ -31,16 +35,18 @@ public class User {
             String firstName,
             String lastName,
             String email,
+            String username,
             String password) {
-        return new User(id, firstName, lastName, email, password);
+        return new User(id, firstName, lastName, email, username, password);
     }
 
     public static User withoutId(
             String firstName,
             String lastName,
             String email,
+            String username,
             String password) {
-        return new User(null, firstName, lastName, email, password);
+        return new User(null, firstName, lastName, email, username, password);
     }
 
 
