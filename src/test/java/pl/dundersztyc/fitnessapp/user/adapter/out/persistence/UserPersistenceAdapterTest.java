@@ -25,6 +25,9 @@ class UserPersistenceAdapterTest extends AbstractTestcontainers {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserMapper userMapper;
+
 
     @Test
     @Sql(scripts = "/LoadAccount.sql")
@@ -33,6 +36,22 @@ class UserPersistenceAdapterTest extends AbstractTestcontainers {
 
         assertThat(user.getFirstName()).isEqualTo("Jan");
         assertThat(user.getLastName()).isEqualTo("Kowalski");
+    }
+
+    @Test
+    void shouldFindUserByUsername() {
+        User user = defaultUser()
+                .firstName("firstname123")
+                .username("username123")
+                .build();
+
+        userRepository.save(userMapper.mapToJpaEntity(user));
+
+        User userByUsername = persistenceAdapter.findByUsername("username123");
+
+        assertThat(userByUsername).isNotNull();
+        assertThat(userByUsername.getUsername()).isEqualTo("username123");
+        assertThat(userByUsername.getFirstName()).isEqualTo("firstname123");
     }
 
     @Test
