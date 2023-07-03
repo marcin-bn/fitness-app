@@ -12,6 +12,7 @@ public class UserTestData {
                 .firstName("Jan")
                 .lastName("Kowalski")
                 .email("jankowalski@gmail.com")
+                .username("jan123")
                 .password("password1");
     }
 }
