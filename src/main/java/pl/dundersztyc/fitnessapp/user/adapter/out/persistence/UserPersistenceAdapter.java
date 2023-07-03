@@ -25,6 +25,13 @@ public class UserPersistenceAdapter implements LoadUserPort, UpdateUserPort {
     }
 
     @Override
+    public User findByUsername(String username) {
+        UserJpaEntity user = userRepository.findByUsername(username)
+                .orElseThrow(EntityNotFoundException::new);
+        return userMapper.mapToDomainEntity(user);
+    }
+
+    @Override
     public void update(User user) {
         UserJpaEntity userEntity = userMapper.mapToJpaEntity(user);
         userRepository.save(userEntity);
