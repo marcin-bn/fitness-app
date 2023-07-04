@@ -1,5 +1,6 @@
 package pl.dundersztyc.fitnessapp;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -13,9 +14,10 @@ public abstract class AbstractTestcontainers {
     @Container
     protected static final PostgreSQLContainer<?> postgreSQLContainer =
             new PostgreSQLContainer<>("postgres:latest")
-                    .withDatabaseName("fitness_db_test")
-                    .withUsername("testuser")
-                    .withPassword("testpassword");
+                    .withDatabaseName(System.getenv("POSTGRES_DB_TEST"))
+                    .withUsername(System.getenv("POSTGRES_USER"))
+                    .withPassword(System.getenv("POSTGRES_PASSWORD"));
+
 
     @DynamicPropertySource
     private static void registerDataSourceProperties(

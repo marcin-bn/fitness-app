@@ -4,6 +4,6 @@ services:
     ports:
       - 5433:5432/tcp
     environment:
-      POSTGRES_USER: testuser
-      POSTGRES_DB: fitness_db
-      POSTGRES_PASSWORD: testpassword
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
