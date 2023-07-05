@@ -30,6 +30,8 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_URL_TEST: ${{ secrets.POSTGRES_URL_TEST }}
           POSTGRES_DB_TEST: ${{ secrets.POSTGRES_DB_TEST }}
+          RSA_PUBLIC: ${{ secrets.RSA_PUBLIC }}
+          RSA_PRIVATE: ${{ secrets.RSA_PRIVATE }}
 
       - name: Build and run Unit/Integration Tests with Maven
         run: mvn -ntp -B verify
@@ -40,3 +42,5 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_URL_TEST: ${{ secrets.POSTGRES_URL_TEST }}
           POSTGRES_DB_TEST: ${{ secrets.POSTGRES_DB_TEST }}
+          RSA_PUBLIC: ${{ secrets.RSA_PUBLIC }}
+          RSA_PRIVATE: ${{ secrets.RSA_PRIVATE }}
