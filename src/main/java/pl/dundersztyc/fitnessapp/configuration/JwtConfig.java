@@ -1,52 +1,53 @@
 package pl.dundersztyc.fitnessapp.configuration;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
 
 @Configuration
+@DependsOn("rsaConfig")
 public class JwtConfig {
 
-    @Value("${rsa.public}")
-    private String rsaPublic;
+    @Autowired
+    private RSAPrivateKey rsaPrivateKey;
 
-    @Value("${rsa.private}")
-    private String rsaPrivate;
+    @Autowired
+    private RSAPublicKey rsaPublicKey;
 
     @Bean
-    RSAPrivateKey rsaPrivateKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
-        rsaPrivate = rsaPrivate.replaceAll("\\n", "")
-                .replace("-----BEGIN PRIVATE KEY-----", "")
-                .replace("-----END PRIVATE KEY-----", "")
-                .replace(" ", "");
-
-        KeyFactory kf = KeyFactory.getInstance("RSA");
-
-        PKCS8EncodedKeySpec keySpecPKCS8 = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(rsaPrivate));
-        return (RSAPrivateKey) kf.generatePrivate(keySpecPKCS8);
+    public JwtEncoder jwtEncoder() {
+        var jwk = new RSAKey.Builder(this.rsaPublicKey).privateKey(this.rsaPrivateKey).build();
+        var jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
+        return new NimbusJwtEncoder(jwks);
     }
 
     @Bean
-    RSAPublicKey rsaPublicKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
-        rsaPublic = rsaPublic.replaceAll("\\n", "")
-                .replace("-----BEGIN PUBLIC KEY-----", "")
-                .replace("-----END PUBLIC KEY-----", "")
-                .replace(" ", "");
+    public JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withPublicKey(this.rsaPublicKey).build();
+    }
 
-        KeyFactory kf = KeyFactory.getInstance("RSA");
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        var jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
+        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
 
-        X509EncodedKeySpec keySpecX509 = new X509EncodedKeySpec(Base64.getDecoder().decode(rsaPublic));
-        return  (RSAPublicKey) kf.generatePublic(keySpecX509);
+        var jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
+        return jwtAuthenticationConverter;
     }
 
 }

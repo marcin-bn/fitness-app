@@ -60,7 +60,7 @@ class UserPersistenceAdapterTest extends AbstractTestcontainers {
                 .firstName("Tomasz")
                 .build();
 
-        persistenceAdapter.update(user);
+        persistenceAdapter.save(user);
 
         assertThat(userRepository.count()).isEqualTo(1);
 

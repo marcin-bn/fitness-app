@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.dundersztyc.fitnessapp.user.domain.Role;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "_user")
@@ -18,19 +21,18 @@ public class UserJpaEntity {
     @GeneratedValue
     private Long id;
 
-    @Column
     private String firstName;
 
-    @Column
     private String lastName;
 
-    @Column
     private String email;
 
-    @Column
     private String username;
 
-    @Column
     private String password;
+
+    @ElementCollection
+    @CollectionTable(name = "authority", joinColumns = @JoinColumn(name = "id"))
+    private Set<String> authorities;
 
 }

@@ -1,7 +1,10 @@
 package pl.dundersztyc.fitnessapp.common;
 
+import pl.dundersztyc.fitnessapp.user.domain.Role;
 import pl.dundersztyc.fitnessapp.user.domain.User;
 import pl.dundersztyc.fitnessapp.user.domain.User.UserBuilder;
+
+import java.util.Set;
 
 public class UserTestData {
 
@@ -13,6 +16,7 @@ public class UserTestData {
                 .lastName("Kowalski")
                 .email("jankowalski@gmail.com")
                 .username("jan123")
-                .password("password1");
+                .password("password1")
+                .authorities(Set.of(new Role(Role.USER_LOGGED)));
     }
 }
