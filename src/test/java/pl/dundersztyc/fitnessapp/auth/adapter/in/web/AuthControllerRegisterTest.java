@@ -1,20 +1,15 @@
 package pl.dundersztyc.fitnessapp.auth.adapter.in.web;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import pl.dundersztyc.fitnessapp.AbstractIntegrationTest;
-//import pl.dundersztyc.fitnessapp.user.adapter.out.persistence.UserRepository;
-import pl.dundersztyc.fitnessapp.user.application.port.out.LoadUserPort;
 import pl.dundersztyc.fitnessapp.user.application.port.out.SaveUserPort;
 import pl.dundersztyc.fitnessapp.user.domain.User;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static pl.dundersztyc.fitnessapp.common.JsonMapper.toJsonString;
 import static pl.dundersztyc.fitnessapp.common.UserTestData.defaultUser;
 

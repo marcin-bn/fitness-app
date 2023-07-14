@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.dundersztyc.fitnessapp.user.domain.Role;
 
 import java.util.Set;
 

@@ -25,8 +25,6 @@ import pl.dundersztyc.fitnessapp.user.application.port.out.LoadUserPort;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 
-import static java.lang.String.format;
-
 @EnableWebSecurity
 @Configuration
 @AllArgsConstructor

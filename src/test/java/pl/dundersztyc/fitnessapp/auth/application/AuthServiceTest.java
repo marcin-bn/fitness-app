@@ -13,7 +13,6 @@ import pl.dundersztyc.fitnessapp.user.domain.Role;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
 
 
 public class AuthServiceTest extends AbstractIntegrationTest {

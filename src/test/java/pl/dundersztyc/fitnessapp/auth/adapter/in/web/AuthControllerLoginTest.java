@@ -1,27 +1,13 @@
 package pl.dundersztyc.fitnessapp.auth.adapter.in.web;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import pl.dundersztyc.fitnessapp.AbstractIntegrationTest;
-import pl.dundersztyc.fitnessapp.AbstractTestcontainers;
 import pl.dundersztyc.fitnessapp.auth.domain.AuthRequest;
 import pl.dundersztyc.fitnessapp.auth.domain.UserView;
 import pl.dundersztyc.fitnessapp.user.application.port.out.SaveUserPort;
