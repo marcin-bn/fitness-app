@@ -1,6 +1,8 @@
 package pl.dundersztyc.fitnessapp.user.adapter.out.persistence;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -28,6 +30,15 @@ class UserPersistenceAdapterTest extends AbstractTestcontainers {
     @Autowired
     private UserMapper userMapper;
 
+    @BeforeAll
+    static void beforeAll(@Autowired UserRepository userRepository) {
+        userRepository.deleteAll();
+    }
+
+    @AfterEach
+    void afterEach() {
+        userRepository.deleteAll();
+    }
 
     @Test
     @Sql(scripts = "/LoadAccount.sql")
@@ -55,18 +66,31 @@ class UserPersistenceAdapterTest extends AbstractTestcontainers {
     }
 
     @Test
-    void shouldUpdateUser() {
+    void shouldSaveUser() {
         User user = defaultUser()
                 .firstName("Tomasz")
                 .build();
 
-        persistenceAdapter.save(user);
+        boolean result = persistenceAdapter.save(user);
 
+        assertThat(result).isTrue();
         assertThat(userRepository.count()).isEqualTo(1);
 
-        UserJpaEntity savedEntity = userRepository.findById(user.getId().value()).orElseThrow(EntityNotFoundException::new);
+        UserJpaEntity savedEntity = userRepository.findByUsername(user.getUsername()).orElseThrow(EntityNotFoundException::new);
+
         assertThat(savedEntity.getFirstName()).isEqualTo("Tomasz");
 
+    }
+
+    @Test
+    void saveWithSameUserTwiceIsIncorrect() {
+        User user = defaultUser().build();
+
+        boolean firstSave = persistenceAdapter.save(user);
+        boolean secondSave = persistenceAdapter.save(user);
+
+        assertThat(firstSave).isTrue();
+        assertThat(secondSave).isFalse();
     }
 
 
