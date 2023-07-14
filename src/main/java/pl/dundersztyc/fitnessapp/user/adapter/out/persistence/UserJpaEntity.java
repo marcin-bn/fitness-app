@@ -15,7 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserJpaEntity {
+class UserJpaEntity {
 
     @Id
     @GeneratedValue
@@ -31,7 +31,7 @@ public class UserJpaEntity {
 
     private String password;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "authority", joinColumns = @JoinColumn(name = "id"))
     private Set<String> authorities;
 

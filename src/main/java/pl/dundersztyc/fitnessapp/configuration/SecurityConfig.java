@@ -31,7 +31,7 @@ import static java.lang.String.format;
 @Configuration
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class SecurityConfig {
+class SecurityConfig {
 
     @Autowired
     private RSAPrivateKey rsaPrivateKey;

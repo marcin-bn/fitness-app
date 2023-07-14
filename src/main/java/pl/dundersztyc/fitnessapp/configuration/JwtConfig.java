@@ -19,7 +19,7 @@ import java.security.interfaces.RSAPublicKey;
 
 @Configuration
 @DependsOn("rsaConfig")
-public class JwtConfig {
+class JwtConfig {
 
     @Autowired
     private RSAPrivateKey rsaPrivateKey;

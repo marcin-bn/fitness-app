@@ -24,8 +24,6 @@ import pl.dundersztyc.fitnessapp.AbstractIntegrationTest;
 import pl.dundersztyc.fitnessapp.AbstractTestcontainers;
 import pl.dundersztyc.fitnessapp.auth.domain.AuthRequest;
 import pl.dundersztyc.fitnessapp.auth.domain.UserView;
-import pl.dundersztyc.fitnessapp.user.adapter.out.persistence.UserPersistenceAdapter;
-import pl.dundersztyc.fitnessapp.user.adapter.out.persistence.UserRepository;
 import pl.dundersztyc.fitnessapp.user.application.port.out.SaveUserPort;
 import pl.dundersztyc.fitnessapp.user.domain.User;
 
@@ -45,23 +43,9 @@ class AuthControllerLoginTest extends AbstractIntegrationTest {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private UserRepository userRepository;
-
     private static final String LOGIN_URL = "/api/v1/public/login";
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
-
-
-    @BeforeAll
-    static void beforeAll(@Autowired UserRepository userRepository) {
-        userRepository.deleteAll();
-    }
-
-    @AfterEach
-    void afterEach() {
-        userRepository.deleteAll();
-    }
 
     @Test
     public void shouldLoginPass() throws Exception {

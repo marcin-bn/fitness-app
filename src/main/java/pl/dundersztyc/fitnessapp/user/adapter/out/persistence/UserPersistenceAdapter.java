@@ -7,11 +7,10 @@ import pl.dundersztyc.fitnessapp.user.application.port.out.LoadUserPort;
 import pl.dundersztyc.fitnessapp.user.application.port.out.SaveUserPort;
 import pl.dundersztyc.fitnessapp.user.domain.User;
 import pl.dundersztyc.fitnessapp.user.domain.User.UserId;
-import pl.dundersztyc.fitnessapp.user.mapper.UserMapper;
 
 @Component
 @RequiredArgsConstructor
-public class UserPersistenceAdapter implements LoadUserPort, SaveUserPort {
+class UserPersistenceAdapter implements LoadUserPort, SaveUserPort {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;

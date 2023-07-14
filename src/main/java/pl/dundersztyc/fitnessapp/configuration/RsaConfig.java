@@ -14,7 +14,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
 @Configuration
-public class RsaConfig {
+class RsaConfig {
 
     @Value("${rsa.public}")
     private String rsaPublic;

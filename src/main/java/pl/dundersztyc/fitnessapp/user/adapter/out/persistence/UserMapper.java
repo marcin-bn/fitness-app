@@ -1,4 +1,4 @@
-package pl.dundersztyc.fitnessapp.user.mapper;
+package pl.dundersztyc.fitnessapp.user.adapter.out.persistence;
 
 import org.springframework.stereotype.Component;
 import pl.dundersztyc.fitnessapp.user.adapter.out.persistence.UserJpaEntity;
@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-public class UserMapper {
+class UserMapper {
 
     public User mapToDomainEntity(UserJpaEntity userJpaEntity) {
 

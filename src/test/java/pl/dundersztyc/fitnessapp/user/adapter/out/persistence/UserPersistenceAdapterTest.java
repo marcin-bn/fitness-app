@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 import pl.dundersztyc.fitnessapp.AbstractTestcontainers;
 import pl.dundersztyc.fitnessapp.user.domain.User;
-import pl.dundersztyc.fitnessapp.user.mapper.UserMapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.dundersztyc.fitnessapp.common.UserTestData.defaultUser;

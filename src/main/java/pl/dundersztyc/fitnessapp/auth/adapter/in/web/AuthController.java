@@ -22,7 +22,7 @@ import pl.dundersztyc.fitnessapp.user.domain.User;
 @RestController
 @RequestMapping(path = "api/v1/public")
 @RequiredArgsConstructor
-public class AuthController {
+class AuthController {
 
     private final AuthenticationUseCase authenticationUseCase;
     private final ProvideJwtUseCase provideJwtUseCase;
