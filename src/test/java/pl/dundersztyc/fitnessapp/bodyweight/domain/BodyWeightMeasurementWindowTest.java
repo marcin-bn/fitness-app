@@ -66,7 +66,7 @@ class BodyWeightMeasurementWindowTest {
         BodyWeightProgress progress = measurementWindow.getProgress();
 
         assertThat(progress.getWeightLoss()).isEqualTo(weightLoss);
-        assertThat(progress.getWeightLoss().compareTo(expectedWeeklyLoss)).isEqualTo(0);
+        assertThat(progress.getWeeklyWeightLoss().compareTo(expectedWeeklyLoss)).isEqualTo(0);
     }
 
     private static Stream<Arguments> provideInputAndResultsForCalculateBodyWeightProgress() {
