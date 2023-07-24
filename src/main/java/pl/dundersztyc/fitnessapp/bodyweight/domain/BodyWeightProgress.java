@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Value
-class BodyWeightProgress {
+public class BodyWeightProgress {
 
     private final static int SCALE = 2;
     private final static RoundingMode ROUNDING_MODE = RoundingMode.DOWN;

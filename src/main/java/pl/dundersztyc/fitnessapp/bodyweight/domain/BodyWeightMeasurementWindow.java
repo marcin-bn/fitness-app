@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-class BodyWeightMeasurementWindow {
+public class BodyWeightMeasurementWindow {
 
     private List<BodyWeightMeasurement> measurements;
 
@@ -42,7 +42,7 @@ class BodyWeightMeasurementWindow {
     }
 
     public void addMeasurement(BodyWeightMeasurement measurement) {
-        measurements.add(measurement);
+        this.measurements.add(measurement);
     }
 
     public List<BodyWeightMeasurement> getMeasurements() {

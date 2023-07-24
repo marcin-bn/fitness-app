@@ -16,8 +16,13 @@ public class BodyWeightMeasurement {
 
     private BodyWeightMeasurementId id;
 
+    @NonNull
     private final User.UserId userId;
+
+    @NonNull
     private final BigDecimal weight;
+
+    @NonNull
     private final LocalDateTime timestamp;
 
 
