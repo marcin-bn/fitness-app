@@ -10,16 +10,16 @@ import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.dundersztyc.fitnessapp.common.BodyWeightMeasurementTestData.defaultMeasurement;
+import static pl.dundersztyc.fitnessapp.common.BodyWeightMeasurementTestData.defaultBodyWeightMeasurement;
 
 class BodyWeightMeasurementWindowTest {
 
     @Test
     void calculateStartTimestamp() {
         var measurementWindow = new BodyWeightMeasurementWindow(
-                defaultMeasurement().timestamp(startDate()).build(),
-                defaultMeasurement().timestamp(inBetweenDate()).build(),
-                defaultMeasurement().timestamp(endDate()).build()
+                defaultBodyWeightMeasurement().timestamp(startDate()).build(),
+                defaultBodyWeightMeasurement().timestamp(inBetweenDate()).build(),
+                defaultBodyWeightMeasurement().timestamp(endDate()).build()
         );
 
         assertThat(measurementWindow.getStartTimestamp()).isEqualTo(startDate());
@@ -28,9 +28,9 @@ class BodyWeightMeasurementWindowTest {
     @Test
     void calculateEndTimestamp() {
         var measurementWindow = new BodyWeightMeasurementWindow(
-                defaultMeasurement().timestamp(startDate()).build(),
-                defaultMeasurement().timestamp(inBetweenDate()).build(),
-                defaultMeasurement().timestamp(endDate()).build()
+                defaultBodyWeightMeasurement().timestamp(startDate()).build(),
+                defaultBodyWeightMeasurement().timestamp(inBetweenDate()).build(),
+                defaultBodyWeightMeasurement().timestamp(endDate()).build()
         );
 
         assertThat(measurementWindow.getEndTimestamp()).isEqualTo(endDate());
@@ -39,9 +39,9 @@ class BodyWeightMeasurementWindowTest {
     @Test
     void calculateMinWeight() {
         var measurementWindow = new BodyWeightMeasurementWindow(
-                defaultMeasurement().weight(BigDecimal.valueOf(90L)).build(),
-                defaultMeasurement().weight(BigDecimal.valueOf(50L)).build(),
-                defaultMeasurement().weight(BigDecimal.valueOf(70L)).build()
+                defaultBodyWeightMeasurement().weight(BigDecimal.valueOf(90L)).build(),
+                defaultBodyWeightMeasurement().weight(BigDecimal.valueOf(50L)).build(),
+                defaultBodyWeightMeasurement().weight(BigDecimal.valueOf(70L)).build()
         );
 
         assertThat(measurementWindow.getMinWeight()).isEqualTo(BigDecimal.valueOf(50L));
@@ -50,9 +50,9 @@ class BodyWeightMeasurementWindowTest {
     @Test
     void calculateMaxWeight() {
         var measurementWindow = new BodyWeightMeasurementWindow(
-                defaultMeasurement().weight(BigDecimal.valueOf(90L)).build(),
-                defaultMeasurement().weight(BigDecimal.valueOf(50L)).build(),
-                defaultMeasurement().weight(BigDecimal.valueOf(70L)).build()
+                defaultBodyWeightMeasurement().weight(BigDecimal.valueOf(90L)).build(),
+                defaultBodyWeightMeasurement().weight(BigDecimal.valueOf(50L)).build(),
+                defaultBodyWeightMeasurement().weight(BigDecimal.valueOf(70L)).build()
         );
 
         assertThat(measurementWindow.getMaxWeight()).isEqualTo(BigDecimal.valueOf(90L));
@@ -86,8 +86,8 @@ class BodyWeightMeasurementWindowTest {
         BigDecimal endWeight = startWeight.subtract(weightLoss);
 
         return new BodyWeightMeasurementWindow(
-                defaultMeasurement().timestamp(startDate).weight(startWeight).build(),
-                defaultMeasurement().timestamp(endDate).weight(endWeight).build()
+                defaultBodyWeightMeasurement().timestamp(startDate).weight(startWeight).build(),
+                defaultBodyWeightMeasurement().timestamp(endDate).weight(endWeight).build()
         );
     }
 

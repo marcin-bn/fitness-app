@@ -5,6 +5,6 @@ import pl.dundersztyc.fitnessapp.bodyweight.domain.BodyWeightProgress;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public interface CalculateProgressUseCase {
+public interface CalculateBodyWeightProgressUseCase {
     BodyWeightProgress calculateProgress(Long userId, LocalDateTime startDate, Optional<LocalDateTime> finishDate);
 }

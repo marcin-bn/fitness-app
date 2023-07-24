@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 public class BodyWeightMeasurementTestData {
 
-    public static BodyWeightMeasurementBuilder defaultMeasurement() {
+    public static BodyWeightMeasurementBuilder defaultBodyWeightMeasurement() {
         return BodyWeightMeasurement.builder()
                 .userId(new User.UserId(1L))
                 .weight(BigDecimal.valueOf(85.5))

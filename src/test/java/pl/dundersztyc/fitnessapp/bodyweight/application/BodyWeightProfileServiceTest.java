@@ -3,7 +3,7 @@ package pl.dundersztyc.fitnessapp.bodyweight.application;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import pl.dundersztyc.fitnessapp.bodyweight.application.port.in.BodyWeightMeasurementRequest;
-import pl.dundersztyc.fitnessapp.bodyweight.application.port.out.LoadProfilePort;
+import pl.dundersztyc.fitnessapp.bodyweight.application.port.out.LoadBodyWeightProfilePort;
 import pl.dundersztyc.fitnessapp.bodyweight.application.port.out.UpdateBodyWeightProfilePort;
 import pl.dundersztyc.fitnessapp.bodyweight.domain.BodyWeightMeasurement;
 import pl.dundersztyc.fitnessapp.bodyweight.domain.BodyWeightMeasurementWindow;
@@ -19,13 +19,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.*;
-import static pl.dundersztyc.fitnessapp.common.BodyWeightMeasurementTestData.defaultMeasurement;
+import static pl.dundersztyc.fitnessapp.common.BodyWeightMeasurementTestData.defaultBodyWeightMeasurement;
 
 class BodyWeightProfileServiceTest {
 
-    private final LoadProfilePort loadProfilePort = mock(LoadProfilePort.class);
+    private final LoadBodyWeightProfilePort loadBodyWeightProfilePort = mock(LoadBodyWeightProfilePort.class);
     private final UpdateBodyWeightProfilePort updateBodyWeightProfilePort = mock(UpdateBodyWeightProfilePort.class);
-    private final BodyWeightProfileService profileService = new BodyWeightProfileService(loadProfilePort, updateBodyWeightProfilePort);
+    private final BodyWeightProfileService profileService = new BodyWeightProfileService(loadBodyWeightProfilePort, updateBodyWeightProfilePort);
 
     @Test
     void shouldAddMeasurement() {
@@ -50,8 +50,8 @@ class BodyWeightProfileServiceTest {
         BigDecimal endWeight = BigDecimal.valueOf(85.25);
 
         List<BodyWeightMeasurement> measurements = List.of(
-                defaultMeasurement().timestamp(startDate).weight(startWeight).build(),
-                defaultMeasurement().timestamp(endDate).weight(endWeight).build()
+                defaultBodyWeightMeasurement().timestamp(startDate).weight(startWeight).build(),
+                defaultBodyWeightMeasurement().timestamp(endDate).weight(endWeight).build()
         );
 
         givenProfileWithMeasurements(measurements);
@@ -68,8 +68,8 @@ class BodyWeightProfileServiceTest {
         User.UserId userId = new User.UserId(1L);
 
         List<BodyWeightMeasurement> measurements = List.of(
-                defaultMeasurement().build(),
-                defaultMeasurement().build()
+                defaultBodyWeightMeasurement().build(),
+                defaultBodyWeightMeasurement().build()
         );
 
         givenProfileWithMeasurements(measurements);
@@ -83,8 +83,8 @@ class BodyWeightProfileServiceTest {
 
     private void thenProfileHasBeenLoaded(User.UserId userId) {
         ArgumentCaptor<User.UserId> userIdCaptor = ArgumentCaptor.forClass(User.UserId.class);
-        then(loadProfilePort).should(times(1))
-                .loadBodyWeightProfile(userIdCaptor.capture(), any(LocalDateTime.class));
+        then(loadBodyWeightProfilePort).should(times(1))
+                .load(userIdCaptor.capture(), any(LocalDateTime.class));
 
         assertThat(userIdCaptor.getValue()).isEqualTo(userId);
     }
@@ -104,18 +104,18 @@ class BodyWeightProfileServiceTest {
     }
 
     private void givenProfileWithId(User.UserId userId) {
-        given(loadProfilePort.loadBodyWeightProfile(eq(userId), any(LocalDateTime.class)))
+        given(loadBodyWeightProfilePort.load(eq(userId), any(LocalDateTime.class)))
                 .willReturn(new BodyWeightProfile(userId, new BodyWeightMeasurementWindow()));
-        given(loadProfilePort.loadBodyWeightProfile(eq(userId), any(LocalDateTime.class), any(LocalDateTime.class)))
+        given(loadBodyWeightProfilePort.load(eq(userId), any(LocalDateTime.class), any(LocalDateTime.class)))
                 .willReturn(new BodyWeightProfile(userId, new BodyWeightMeasurementWindow()));
     }
 
     private void givenProfileWithMeasurements(List<BodyWeightMeasurement> measurements) {
         BodyWeightProfile profile = new BodyWeightProfile(new User.UserId(1L), new BodyWeightMeasurementWindow(measurements));
 
-        given(loadProfilePort.loadBodyWeightProfile(any(User.UserId.class), any(LocalDateTime.class)))
+        given(loadBodyWeightProfilePort.load(any(User.UserId.class), any(LocalDateTime.class)))
                 .willReturn(profile);
-        given(loadProfilePort.loadBodyWeightProfile(any(User.UserId.class), any(LocalDateTime.class), any(LocalDateTime.class)))
+        given(loadBodyWeightProfilePort.load(any(User.UserId.class), any(LocalDateTime.class), any(LocalDateTime.class)))
                 .willReturn(profile);
     }
 

@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.dundersztyc.fitnessapp.common.BodyWeightMeasurementTestData.defaultMeasurement;
+import static pl.dundersztyc.fitnessapp.common.BodyWeightMeasurementTestData.defaultBodyWeightMeasurement;
 
 @DataJpaTest
 @Import({BodyWeightProfilePersistenceAdapter.class, BodyWeightProfileMapper.class, BodyWeightMeasurementMapper.class})
@@ -46,7 +46,7 @@ public class BodyWeightProfilePersistenceAdapterTest extends AbstractTestcontain
     @Sql(scripts = "/LoadBodyWeightProfile.sql")
     void shouldLoadBodyWeightProfileSince() {
         LocalDateTime since = LocalDateTime.of(2018, 8, 10, 8, 0);
-        var profile = persistenceAdapter.loadBodyWeightProfile(new User.UserId(1L), since);
+        var profile = persistenceAdapter.load(new User.UserId(1L), since);
         var measurementWindow = profile.getMeasurementWindow();
 
         assertThat(measurementWindow.getMeasurements()).hasSize(5);
@@ -60,7 +60,7 @@ public class BodyWeightProfilePersistenceAdapterTest extends AbstractTestcontain
     void shouldLoadBodyWeightProfileFromTo() {
         LocalDateTime from = LocalDateTime.of(2018, 8, 12, 8, 0);
         LocalDateTime to = LocalDateTime.of(2018, 8, 14, 8, 0);
-        var profile = persistenceAdapter.loadBodyWeightProfile(new User.UserId(2L), from, to);
+        var profile = persistenceAdapter.load(new User.UserId(2L), from, to);
         var measurementWindow = profile.getMeasurementWindow();
 
         assertThat(measurementWindow.getMeasurements()).hasSize(3);
@@ -74,7 +74,7 @@ public class BodyWeightProfilePersistenceAdapterTest extends AbstractTestcontain
         final User.UserId userId = new User.UserId(1L);
         var emptyMeasurementWindow = new BodyWeightMeasurementWindow();
         var profile = new BodyWeightProfile(userId, emptyMeasurementWindow);
-        profile.addMeasurement(defaultMeasurement()
+        profile.addMeasurement(defaultBodyWeightMeasurement()
                 .userId(userId).weight(BigDecimal.valueOf(123L)).build());
 
         persistenceAdapter.updateMeasurements(profile);
@@ -88,7 +88,7 @@ public class BodyWeightProfilePersistenceAdapterTest extends AbstractTestcontain
         final User.UserId userId = new User.UserId(1L);
         var emptyMeasurementWindow = new BodyWeightMeasurementWindow();
         var profile = new BodyWeightProfile(userId, emptyMeasurementWindow);
-        profile.addMeasurement(defaultMeasurement()
+        profile.addMeasurement(defaultBodyWeightMeasurement()
                 .id(new BodyWeightMeasurement.BodyWeightMeasurementId(1L))
                 .userId(userId).weight(BigDecimal.valueOf(123L)).build());
 

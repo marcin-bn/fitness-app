@@ -6,6 +6,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-public interface LoadMeasurementsUseCase {
+public interface LoadBodyWeightMeasurementsUseCase {
     List<BodyWeightMeasurement> loadMeasurements(Long userId, LocalDateTime startDate, Optional<LocalDateTime> finishDate);
 }

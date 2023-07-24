@@ -2,11 +2,11 @@ package pl.dundersztyc.fitnessapp.bodyweight.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.dundersztyc.fitnessapp.bodyweight.application.port.in.AddMeasurementUseCase;
+import pl.dundersztyc.fitnessapp.bodyweight.application.port.in.AddBodyWeightMeasurementUseCase;
 import pl.dundersztyc.fitnessapp.bodyweight.application.port.in.BodyWeightMeasurementRequest;
-import pl.dundersztyc.fitnessapp.bodyweight.application.port.in.CalculateProgressUseCase;
-import pl.dundersztyc.fitnessapp.bodyweight.application.port.in.LoadMeasurementsUseCase;
-import pl.dundersztyc.fitnessapp.bodyweight.application.port.out.LoadProfilePort;
+import pl.dundersztyc.fitnessapp.bodyweight.application.port.in.CalculateBodyWeightProgressUseCase;
+import pl.dundersztyc.fitnessapp.bodyweight.application.port.in.LoadBodyWeightMeasurementsUseCase;
+import pl.dundersztyc.fitnessapp.bodyweight.application.port.out.LoadBodyWeightProfilePort;
 import pl.dundersztyc.fitnessapp.bodyweight.application.port.out.UpdateBodyWeightProfilePort;
 import pl.dundersztyc.fitnessapp.bodyweight.domain.BodyWeightMeasurement;
 import pl.dundersztyc.fitnessapp.bodyweight.domain.BodyWeightProfile;
@@ -20,9 +20,9 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class BodyWeightProfileService implements AddMeasurementUseCase, CalculateProgressUseCase, LoadMeasurementsUseCase {
+public class BodyWeightProfileService implements AddBodyWeightMeasurementUseCase, CalculateBodyWeightProgressUseCase, LoadBodyWeightMeasurementsUseCase {
 
-    private final LoadProfilePort loadProfilePort;
+    private final LoadBodyWeightProfilePort loadBodyWeightProfilePort;
     private final UpdateBodyWeightProfilePort updateProfilePort;
 
     @Override
@@ -34,7 +34,7 @@ public class BodyWeightProfileService implements AddMeasurementUseCase, Calculat
                 .build();
 
         LocalDateTime baselineDate = LocalDateTime.now().minusWeeks(2);
-        BodyWeightProfile profile = loadProfilePort.loadBodyWeightProfile(new User.UserId(measurementRequest.userId()), baselineDate);
+        BodyWeightProfile profile = loadBodyWeightProfilePort.load(new User.UserId(measurementRequest.userId()), baselineDate);
         profile.addMeasurement(measurement);
 
         updateProfilePort.updateMeasurements(profile);
@@ -57,8 +57,8 @@ public class BodyWeightProfileService implements AddMeasurementUseCase, Calculat
 
     private BodyWeightProfile loadProfile(Long userId, LocalDateTime startDate, Optional<LocalDateTime> finishDate) {
         if (finishDate.isPresent()) {
-            return loadProfilePort.loadBodyWeightProfile(new User.UserId(userId), startDate, finishDate.get());
+            return loadBodyWeightProfilePort.load(new User.UserId(userId), startDate, finishDate.get());
         }
-        return loadProfilePort.loadBodyWeightProfile(new User.UserId(userId), startDate);
+        return loadBodyWeightProfilePort.load(new User.UserId(userId), startDate);
     }
 }
