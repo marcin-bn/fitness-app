@@ -14,6 +14,6 @@ public class BodyWeightMeasurementTestData {
                 .userId(new User.UserId(1L))
                 .weight(BigDecimal.valueOf(85.5))
                 .timestamp(LocalDateTime.of(2019, 8, 3, 0, 0));
-        }
+    }
 
 }

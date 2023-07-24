@@ -49,7 +49,7 @@ public class BodyWeightProfilePersistenceAdapterTest extends AbstractTestcontain
         var profile = persistenceAdapter.loadBodyWeightProfile(new User.UserId(1L), since);
         var measurementWindow = profile.getMeasurementWindow();
 
-        assertThat(measurementWindow.getMeasurements().size()).isEqualTo(5);
+        assertThat(measurementWindow.getMeasurements()).hasSize(5);
         assertThat(profile.getMinWeight().compareTo(BigDecimal.valueOf(90L))).isEqualTo(0);
         assertThat(profile.getMaxWeight().compareTo(BigDecimal.valueOf(98L))).isEqualTo(0);
         assertThat(profile.isProgressMade()).isTrue();
@@ -63,7 +63,7 @@ public class BodyWeightProfilePersistenceAdapterTest extends AbstractTestcontain
         var profile = persistenceAdapter.loadBodyWeightProfile(new User.UserId(2L), from, to);
         var measurementWindow = profile.getMeasurementWindow();
 
-        assertThat(measurementWindow.getMeasurements().size()).isEqualTo(3);
+        assertThat(measurementWindow.getMeasurements()).hasSize(3);
         assertThat(profile.getMinWeight().compareTo(BigDecimal.valueOf(97L))).isEqualTo(0);
         assertThat(profile.getMaxWeight().compareTo(BigDecimal.valueOf(101L))).isEqualTo(0);
         assertThat(profile.isProgressMade()).isFalse();

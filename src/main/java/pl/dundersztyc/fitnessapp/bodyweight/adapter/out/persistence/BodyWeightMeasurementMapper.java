@@ -5,7 +5,7 @@ import pl.dundersztyc.fitnessapp.bodyweight.domain.BodyWeightMeasurement;
 import pl.dundersztyc.fitnessapp.user.domain.User;
 
 @Component
-public class BodyWeightMeasurementMapper {
+class BodyWeightMeasurementMapper {
 
     public BodyWeightMeasurement mapToDomainEntity(BodyWeightMeasurementJpaEntity measurementJpaEntity) {
         return BodyWeightMeasurement.builder()
