@@ -40,7 +40,7 @@ class UserPersistenceAdapterTest extends AbstractTestcontainers {
     }
 
     @Test
-    @Sql(scripts = "/LoadAccount.sql")
+    @Sql(scripts = "/LoadUser.sql")
     void shouldLoadUsers() {
         User user = persistenceAdapter.findById(new User.UserId(1L));
 
