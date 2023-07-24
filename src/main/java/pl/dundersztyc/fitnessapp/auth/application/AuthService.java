@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import pl.dundersztyc.fitnessapp.auth.application.port.in.AuthenticationUseCase;
 import pl.dundersztyc.fitnessapp.auth.application.port.in.ProvideJwtUseCase;
 import pl.dundersztyc.fitnessapp.auth.application.port.in.RegisterUserUseCase;
-import pl.dundersztyc.fitnessapp.auth.domain.AuthRequest;
+import pl.dundersztyc.fitnessapp.auth.application.port.in.AuthRequest;
 import pl.dundersztyc.fitnessapp.user.application.port.out.SaveUserPort;
 import pl.dundersztyc.fitnessapp.user.domain.User;
 

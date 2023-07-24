@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.dundersztyc.fitnessapp.auth.application.port.in.AuthenticationUseCase;
 import pl.dundersztyc.fitnessapp.auth.application.port.in.ProvideJwtUseCase;
 import pl.dundersztyc.fitnessapp.auth.application.port.in.RegisterUserUseCase;
-import pl.dundersztyc.fitnessapp.auth.domain.AuthRequest;
-import pl.dundersztyc.fitnessapp.auth.domain.UserView;
+import pl.dundersztyc.fitnessapp.auth.application.port.in.AuthRequest;
 import pl.dundersztyc.fitnessapp.user.domain.User;
 
 

@@ -8,8 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MvcResult;
 import pl.dundersztyc.fitnessapp.AbstractIntegrationTest;
-import pl.dundersztyc.fitnessapp.auth.domain.AuthRequest;
-import pl.dundersztyc.fitnessapp.auth.domain.UserView;
+import pl.dundersztyc.fitnessapp.auth.application.port.in.AuthRequest;
 import pl.dundersztyc.fitnessapp.user.application.port.out.SaveUserPort;
 import pl.dundersztyc.fitnessapp.user.domain.User;
 

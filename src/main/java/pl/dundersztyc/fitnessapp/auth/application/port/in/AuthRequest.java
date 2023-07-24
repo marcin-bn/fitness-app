@@ -1,4 +1,4 @@
-package pl.dundersztyc.fitnessapp.auth.domain;
+package pl.dundersztyc.fitnessapp.auth.application.port.in;
 
 import jakarta.validation.constraints.NotNull;
 
