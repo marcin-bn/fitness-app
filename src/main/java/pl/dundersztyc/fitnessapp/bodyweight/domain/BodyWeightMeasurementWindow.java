@@ -28,17 +28,11 @@ public class BodyWeightMeasurementWindow {
     }
 
     public BigDecimal getMinWeight() {
-        return measurements.stream()
-                .min(Comparator.comparing(BodyWeightMeasurement::getWeight))
-                .orElseThrow(IllegalStateException::new)
-                .getWeight();
+        return getMin(Comparator.comparing(BodyWeightMeasurement::getWeight)).getWeight();
     }
 
     public BigDecimal getMaxWeight() {
-        return measurements.stream()
-                .max(Comparator.comparing(BodyWeightMeasurement::getWeight))
-                .orElseThrow(IllegalStateException::new)
-                .getWeight();
+        return getMax(Comparator.comparing(BodyWeightMeasurement::getWeight)).getWeight();
     }
 
     public void addMeasurement(BodyWeightMeasurement measurement) {
@@ -64,14 +58,22 @@ public class BodyWeightMeasurementWindow {
     }
 
     private BodyWeightMeasurement getFirstMeasurement() {
-        return measurements.stream()
-                .min(Comparator.comparing(BodyWeightMeasurement::getTimestamp))
-                .orElseThrow(IllegalStateException::new);
+        return getMin(Comparator.comparing(BodyWeightMeasurement::getTimestamp));
     }
 
     private BodyWeightMeasurement getLastMeasurement() {
+        return getMax(Comparator.comparing(BodyWeightMeasurement::getTimestamp));
+    }
+
+    private BodyWeightMeasurement getMin(Comparator<BodyWeightMeasurement> comparator) {
         return measurements.stream()
-                .max(Comparator.comparing(BodyWeightMeasurement::getTimestamp))
+                .min(comparator)
+                .orElseThrow(IllegalStateException::new);
+    }
+
+    private BodyWeightMeasurement getMax(Comparator<BodyWeightMeasurement> comparator) {
+        return measurements.stream()
+                .max(comparator)
                 .orElseThrow(IllegalStateException::new);
     }
 

@@ -7,8 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FitnessAppApplication {
 
 	public static void main(String[] args) {
-		var ctx = SpringApplication.run(FitnessAppApplication.class, args);
-		System.out.println("A");
+		SpringApplication.run(FitnessAppApplication.class, args);
 	}
 
 }

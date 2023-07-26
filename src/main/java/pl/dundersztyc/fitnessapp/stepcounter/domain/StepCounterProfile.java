@@ -16,4 +16,17 @@ public class StepCounterProfile {
         measurementWindow.addMeasurement(measurement);
     }
 
+    public Long getMinSteps() {
+        return measurementWindow.getMinSteps();
+    }
+
+    public Long getMaxSteps() {
+        return measurementWindow.getMaxSteps();
+    }
+
+    public Long getAverageSteps() {
+        return measurementWindow.getAverageSteps();
+    }
+
+
 }

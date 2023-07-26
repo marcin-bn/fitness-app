@@ -15,7 +15,7 @@ import static pl.dundersztyc.fitnessapp.common.BodyWeightMeasurementTestData.def
 class BodyWeightMeasurementWindowTest {
 
     @Test
-    void calculateStartTimestamp() {
+    void getStartTimestamp() {
         var measurementWindow = new BodyWeightMeasurementWindow(
                 defaultBodyWeightMeasurement().timestamp(startDate()).build(),
                 defaultBodyWeightMeasurement().timestamp(inBetweenDate()).build(),
@@ -26,7 +26,7 @@ class BodyWeightMeasurementWindowTest {
     }
 
     @Test
-    void calculateEndTimestamp() {
+    void getEndTimestamp() {
         var measurementWindow = new BodyWeightMeasurementWindow(
                 defaultBodyWeightMeasurement().timestamp(startDate()).build(),
                 defaultBodyWeightMeasurement().timestamp(inBetweenDate()).build(),
@@ -37,7 +37,7 @@ class BodyWeightMeasurementWindowTest {
     }
 
     @Test
-    void calculateMinWeight() {
+    void getMinWeight() {
         var measurementWindow = new BodyWeightMeasurementWindow(
                 defaultBodyWeightMeasurement().weight(BigDecimal.valueOf(90L)).build(),
                 defaultBodyWeightMeasurement().weight(BigDecimal.valueOf(50L)).build(),
@@ -48,7 +48,7 @@ class BodyWeightMeasurementWindowTest {
     }
 
     @Test
-    void calculateMaxWeight() {
+    void getMaxWeight() {
         var measurementWindow = new BodyWeightMeasurementWindow(
                 defaultBodyWeightMeasurement().weight(BigDecimal.valueOf(90L)).build(),
                 defaultBodyWeightMeasurement().weight(BigDecimal.valueOf(50L)).build(),
