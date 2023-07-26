@@ -3,6 +3,7 @@ package pl.dundersztyc.fitnessapp.stepcounter.domain;
 import lombok.NonNull;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class StepMeasurementWindow {
@@ -50,6 +51,19 @@ public class StepMeasurementWindow {
         ).longValue();
     }
 
+    public Long getAverageDailySteps() {
+        long totalSteps = measurements.stream()
+                .mapToLong(StepMeasurement::getSteps)
+                .sum();
+        long days = getDaysBetween(getStartTimestamp(), getEndTimestamp());
+
+        return (days == 0) ? 0L : (totalSteps / days);
+    }
+
+    private long getDaysBetween(LocalDateTime start, LocalDateTime end) {
+        return ChronoUnit.DAYS.between(start, end);
+    }
+
     private StepMeasurement getFirstMeasurement() {
         return getMin(Comparator.comparing(StepMeasurement::getTimestamp));
     }
@@ -69,5 +83,6 @@ public class StepMeasurementWindow {
                 .max(comparator)
                 .orElseThrow(IllegalStateException::new);
     }
+
 
 }

@@ -21,7 +21,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.dundersztyc.fitnessapp.common.StepMeasurementTestData.defaultStepMeasurement;
 
-// TODO: add assertions after domain development (in sql tests)
 @DataJpaTest
 @Import({StepCounterProfilePersistenceAdapter.class, StepCounterProfileMapper.class, StepMeasurementMapper.class})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -50,6 +49,8 @@ class StepCounterProfilePersistenceAdapterTest extends AbstractTestcontainers {
         var profile = persistenceAdapter.load(new User.UserId(1L), since);
 
         assertThat(profile.getMeasurementWindow().getMeasurements()).hasSize(5);
+        assertThat(profile.getMinSteps()).isEqualTo(9500L);
+        assertThat(profile.getMaxSteps()).isEqualTo(10250L);
     }
 
     @Test
@@ -60,27 +61,33 @@ class StepCounterProfilePersistenceAdapterTest extends AbstractTestcontainers {
         var profile = persistenceAdapter.load(new User.UserId(2L), from, to);
 
         assertThat(profile.getMeasurementWindow().getMeasurements()).hasSize(3);
+        assertThat(profile.getMinSteps()).isEqualTo(9500L);
+        assertThat(profile.getMaxSteps()).isEqualTo(10000L);
     }
 
     @Test
     @Sql(scripts = "/LoadStepCounterProfile.sql")
-    void shouldLoadStepCounterProfileSinceWithTypes() {
+    void shouldLoadStepCounterProfileSinceWithSpecifiedTypes() {
         LocalDateTime since = LocalDateTime.of(2018, 8, 8, 8, 0);
-        var profile = persistenceAdapter.loadWithMeasurementTypes(new User.UserId(1L),
+        var profile = persistenceAdapter.loadWithSpecifiedMeasurementTypes(new User.UserId(1L),
                 List.of(StepMeasurementType.TRAINING), since);
 
         assertThat(profile.getMeasurementWindow().getMeasurements()).hasSize(4);
+        assertThat(profile.getMinSteps()).isEqualTo(9750L);
+        assertThat(profile.getMaxSteps()).isEqualTo(10500L);
     }
 
     @Test
     @Sql(scripts = "/LoadStepCounterProfile.sql")
-    void shouldLoadStepCounterProfileFromToWithTypes() {
+    void shouldLoadStepCounterProfileFromToWithSpecifiedTypes() {
         LocalDateTime from = LocalDateTime.of(2018, 8, 8, 8, 0);
         LocalDateTime to = LocalDateTime.of(2018, 8, 14, 8, 0);
-        var profile = persistenceAdapter.loadWithMeasurementTypes(new User.UserId(2L),
+        var profile = persistenceAdapter.loadWithSpecifiedMeasurementTypes(new User.UserId(2L),
                 List.of(StepMeasurementType.DAILY_ACTIVITY), from, to);
 
         assertThat(profile.getMeasurementWindow().getMeasurements()).hasSize(3);
+        assertThat(profile.getMinSteps()).isEqualTo(9500L);
+        assertThat(profile.getMaxSteps()).isEqualTo(11000L);
     }
 
     @Test

@@ -24,14 +24,14 @@ class BodyWeightProfileController {
     private final LoadBodyWeightMeasurementsUseCase loadBodyWeightMeasurementsUseCase;
 
 
-    @GetMapping("measurements/progress/{userId}")
+    @GetMapping("users/{userId}/measurements/progress")
     BodyWeightProgressResponse getBodyWeightProgress(@PathVariable("userId") Long userId,
                                                      @RequestParam("startDate") LocalDateTime startDate,
                                                      @RequestParam("finishDate") Optional<LocalDateTime> finishDate) {
         return BodyWeightProgressResponse.of(calculateBodyWeightProgressUseCase.calculateProgress(userId, startDate, finishDate));
     }
 
-    @GetMapping("measurements/users/{userId}")
+    @GetMapping("users/{userId}/measurements")
     List<BodyWeightMeasurementResponse> getMeasurementHistory(@PathVariable("userId") Long userId,
                                                               @RequestParam("startDate") LocalDateTime startDate,
                                                               @RequestParam("finishDate") Optional<LocalDateTime> finishDate) {

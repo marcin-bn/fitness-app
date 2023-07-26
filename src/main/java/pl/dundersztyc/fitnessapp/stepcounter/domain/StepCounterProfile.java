@@ -28,5 +28,7 @@ public class StepCounterProfile {
         return measurementWindow.getAverageSteps();
     }
 
-
+    public Long getAverageDailySteps() {
+        return measurementWindow.getAverageDailySteps();
+    }
 }

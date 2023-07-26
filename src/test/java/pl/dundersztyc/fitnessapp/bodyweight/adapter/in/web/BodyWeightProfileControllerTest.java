@@ -57,7 +57,7 @@ class BodyWeightProfileControllerTest extends AbstractIntegrationTest {
         String startDate = LocalDateTime.now().minusMinutes(10).toString();
 
         MvcResult progressResult = mockMvc
-                .perform(get("/api/v1/body-weight/measurements/progress/1")
+                .perform(get("/api/v1/body-weight/users/1/measurements/progress")
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("startDate", startDate))
                 .andExpect(status().isOk())
@@ -84,7 +84,7 @@ class BodyWeightProfileControllerTest extends AbstractIntegrationTest {
         String startDate = LocalDateTime.now().minusMinutes(10).toString();
 
         MvcResult progressResult = mockMvc
-                .perform(get("/api/v1/body-weight/measurements/users/1")
+                .perform(get("/api/v1/body-weight/users/1/measurements")
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("startDate", startDate))
                 .andExpect(status().isOk())

@@ -35,9 +35,9 @@ interface StepMeasurementRepository extends JpaRepository<StepMeasurementJpaEnti
             AND s.timestamp >= :since
             AND s.type IN :types
             """)
-    List<StepMeasurementJpaEntity> findByUserSinceWithTypes(@Param("userId") long userId,
-                                                   @Param("since") LocalDateTime since,
-                                                   @Param("types")List<StepMeasurementType> types);
+    List<StepMeasurementJpaEntity> findByUserSinceWithSpecifiedTypes(@Param("userId") long userId,
+                                                                     @Param("since") LocalDateTime since,
+                                                                     @Param("types")List<StepMeasurementType> types);
     @Query("""
             SELECT s FROM FROM StepMeasurementJpaEntity s
             WHERE s.userId = :userId
@@ -45,8 +45,8 @@ interface StepMeasurementRepository extends JpaRepository<StepMeasurementJpaEnti
             AND s.timestamp <= :to
             AND s.type IN :types
             """)
-    List<StepMeasurementJpaEntity> findByUserFromToWithTypes(@Param("userId") long userId,
-                                                   @Param("from") LocalDateTime from,
-                                                   @Param("to") LocalDateTime to,
-                                                   @Param("types")List<StepMeasurementType> types);
+    List<StepMeasurementJpaEntity> findByUserFromToWithSpecifiedTypes(@Param("userId") long userId,
+                                                                      @Param("from") LocalDateTime from,
+                                                                      @Param("to") LocalDateTime to,
+                                                                      @Param("types")List<StepMeasurementType> types);
 }

@@ -32,14 +32,14 @@ class StepCounterProfilePersistenceAdapter implements LoadStepCounterProfilePort
     }
 
     @Override
-    public StepCounterProfile loadWithMeasurementTypes(User.UserId userId, List<StepMeasurementType> measurementTypes, LocalDateTime baselineDate) {
-        var measurements = measurementRepository.findByUserSinceWithTypes(userId.value(), baselineDate, measurementTypes);
+    public StepCounterProfile loadWithSpecifiedMeasurementTypes(User.UserId userId, List<StepMeasurementType> measurementTypes, LocalDateTime baselineDate) {
+        var measurements = measurementRepository.findByUserSinceWithSpecifiedTypes(userId.value(), baselineDate, measurementTypes);
         return profileMapper.mapToDomainEntity(userId, measurements);
     }
 
     @Override
-    public StepCounterProfile loadWithMeasurementTypes(User.UserId userId, List<StepMeasurementType> measurementTypes, LocalDateTime baselineDate, LocalDateTime finishDate) {
-        var measurements = measurementRepository.findByUserFromToWithTypes(userId.value(), baselineDate, finishDate, measurementTypes);
+    public StepCounterProfile loadWithSpecifiedMeasurementTypes(User.UserId userId, List<StepMeasurementType> measurementTypes, LocalDateTime baselineDate, LocalDateTime finishDate) {
+        var measurements = measurementRepository.findByUserFromToWithSpecifiedTypes(userId.value(), baselineDate, finishDate, measurementTypes);
         return profileMapper.mapToDomainEntity(userId, measurements);
     }
 

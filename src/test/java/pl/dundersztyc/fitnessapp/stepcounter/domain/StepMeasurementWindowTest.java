@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -75,10 +76,53 @@ public class StepMeasurementWindowTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("provideInputAndResultForCalculateAverageDailySteps")
+    void calculateAverageDailySteps(LocalDateTime startDate, LocalDateTime finishDate, LocalDateTime inBetweenDate, List<Long> stepMeasurements, Long expectedAverageDailySteps) {
+        var measurementWindow = prepareWindow(startDate, finishDate, inBetweenDate, stepMeasurements);
+
+        assertThat(measurementWindow.getAverageDailySteps()).isEqualTo(expectedAverageDailySteps);
+    }
+
+    private static Stream<Arguments> provideInputAndResultForCalculateAverageDailySteps() {
+        LocalDateTime startDate = LocalDateTime.of(2020, 1, 1, 1, 1);
+        LocalDateTime finishDate = LocalDateTime.of(2020, 1, 11, 1, 1);
+        LocalDateTime inBetweenDate = LocalDateTime.of(2020, 1, 5, 1, 1);
+
+        return Stream.of(
+                Arguments.of(startDate, finishDate, inBetweenDate, List.of(8000L, 9000L, 10000L), 2700L),
+                Arguments.of(startDate, finishDate, inBetweenDate, List.of(0L, 0L, 0L), 0L),
+                Arguments.of(startDate, finishDate, inBetweenDate, List.of(1L, 10L), 1L),
+                Arguments.of(startDate, finishDate, inBetweenDate, List.of(9L, 10L), 1L)
+        );
+    }
+
     private StepMeasurementWindow prepareWindow(List<Long> stepMeasurements) {
         var measurements = stepMeasurements.stream()
                 .map(steps -> defaultStepMeasurement().steps(steps).build())
                 .toList();
+        return new StepMeasurementWindow(measurements);
+    }
+
+    private StepMeasurementWindow prepareWindow(LocalDateTime startDate, LocalDateTime finishDate, LocalDateTime inBetweenDate, List<Long> stepMeasurements) {
+        assertThat(stepMeasurements).hasSizeGreaterThanOrEqualTo(2);
+
+        var measurements = stepMeasurements.stream()
+                .map(steps -> defaultStepMeasurement().steps(steps).timestamp(inBetweenDate).build())
+                .collect(Collectors.toList());
+
+        // set first measurement
+        measurements.set(0, defaultStepMeasurement()
+                .steps(stepMeasurements.get(0))
+                .timestamp(startDate)
+                .build());
+
+        // set last measurement
+        measurements.set(measurements.size() - 1, defaultStepMeasurement()
+                .steps(stepMeasurements.get(measurements.size() - 1))
+                .timestamp(finishDate)
+                .build());
+
         return new StepMeasurementWindow(measurements);
     }
 

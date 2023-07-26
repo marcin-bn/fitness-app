@@ -10,6 +10,6 @@ import java.util.List;
 public interface LoadStepCounterProfilePort {
     StepCounterProfile load(User.UserId userId, LocalDateTime baselineDate);
     StepCounterProfile load(User.UserId userId, LocalDateTime baselineDate, LocalDateTime finishDate);
-    StepCounterProfile loadWithMeasurementTypes(User.UserId userId, List<StepMeasurementType> measurementTypes, LocalDateTime baselineDate);
-    StepCounterProfile loadWithMeasurementTypes(User.UserId userId, List<StepMeasurementType> measurementTypes, LocalDateTime baselineDate, LocalDateTime finishDate);
+    StepCounterProfile loadWithSpecifiedMeasurementTypes(User.UserId userId, List<StepMeasurementType> measurementTypes, LocalDateTime baselineDate);
+    StepCounterProfile loadWithSpecifiedMeasurementTypes(User.UserId userId, List<StepMeasurementType> measurementTypes, LocalDateTime baselineDate, LocalDateTime finishDate);
 }
