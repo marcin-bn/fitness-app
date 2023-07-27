@@ -33,7 +33,7 @@ public class StepCounterProfileService implements AddStepMeasurementUseCase, Loa
                 .timestamp(measurementRequest.timestamp())
                 .build();
 
-        LocalDateTime baselineDate = LocalDateTime.now().minusWeeks(2);
+        LocalDateTime baselineDate = measurementRequest.timestamp().minusWeeks(2);
         StepCounterProfile profile = loadStepCounterProfilePort.load(new User.UserId(measurementRequest.userId()), baselineDate);
         profile.addMeasurement(measurement);
 
