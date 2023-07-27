@@ -1,5 +1,6 @@
 package pl.dundersztyc.fitnessapp.stepcounter.adapter.in.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -11,8 +12,11 @@ import pl.dundersztyc.fitnessapp.stepcounter.adapter.in.StepMeasurementResponse;
 import pl.dundersztyc.fitnessapp.stepcounter.application.port.in.StepMeasurementRequest;
 import pl.dundersztyc.fitnessapp.stepcounter.domain.StepMeasurementType;
 
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -29,14 +33,13 @@ class StepCounterProfileControllerTest extends AbstractIntegrationTest {
     @Test
     @WithMockUser
     void shouldAddMeasurement() throws Exception {
-
         StepMeasurementRequest measurementRequest = new StepMeasurementRequest(1L, 10000L, StepMeasurementType.DAILY_ACTIVITY, LocalDateTime.now());
 
         MvcResult addResult = addMeasurement(measurementRequest)
                 .andExpect(status().isOk())
                 .andReturn();
 
-        StepMeasurementResponse measurementResponse = fromJson(addResult.getResponse().getContentAsString(), StepMeasurementResponse.class);
+        StepMeasurementResponse measurementResponse = getMeasurementResponse(addResult);
 
         assertThat(measurementResponse.userId()).isEqualTo(1L);
         assertThat(measurementResponse.steps()).isEqualTo(10000L);
@@ -46,28 +49,17 @@ class StepCounterProfileControllerTest extends AbstractIntegrationTest {
     @Test
     @WithMockUser
     void shouldAddMeasurementsAndGetMeasurementsHistory() throws Exception {
-        List<StepMeasurementRequest> measurementRequests = List.of(
-                new StepMeasurementRequest(1L, 9000L, StepMeasurementType.DAILY_ACTIVITY, LocalDateTime.now()),
-                new StepMeasurementRequest(1L, 2000L, StepMeasurementType.TRAINING, LocalDateTime.now()),
-                new StepMeasurementRequest(1L, 10000L, StepMeasurementType.DAILY_ACTIVITY, LocalDateTime.now())
-        );
-        for (StepMeasurementRequest measurementRequest : measurementRequests) {
-            addMeasurement(measurementRequest);
-        }
 
-        String startDate = LocalDateTime.now().minusMinutes(10).toString();
+        addMeasurements(createMeasurementRequests(3));
 
-        MvcResult progressResult = mockMvc
+        MvcResult historyResult = mockMvc
                 .perform(get("/api/v1/step-counter/users/1/measurements")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .param("startDate", startDate))
+                        .param("startDate", LocalDateTime.now().minusMinutes(10).toString()))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        List<StepMeasurementResponse> measurements = fromJson(
-                progressResult.getResponse().getContentAsString(),
-                new TypeReference<List<StepMeasurementResponse>>(){}
-        );
+        List<StepMeasurementResponse> measurements = getMeasurementResponseAsList(historyResult);
 
         assertThat(measurements).hasSize(3);
     }
@@ -75,29 +67,21 @@ class StepCounterProfileControllerTest extends AbstractIntegrationTest {
     @Test
     @WithMockUser
     void shouldAddMeasurementsAndGetMeasurementsHistoryWithSpecifiedTypes() throws Exception {
-        List<StepMeasurementRequest> measurementRequests = List.of(
+        addMeasurements(
                 new StepMeasurementRequest(1L, 9000L, StepMeasurementType.DAILY_ACTIVITY, LocalDateTime.now()),
                 new StepMeasurementRequest(1L, 2000L, StepMeasurementType.TRAINING, LocalDateTime.now()),
                 new StepMeasurementRequest(1L, 10000L, StepMeasurementType.DAILY_ACTIVITY, LocalDateTime.now())
         );
-        for (StepMeasurementRequest measurementRequest : measurementRequests) {
-            addMeasurement(measurementRequest);
-        }
 
-        String startDate = LocalDateTime.now().minusMinutes(10).toString();
-
-        MvcResult progressResult = mockMvc
+        MvcResult historyResult = mockMvc
                 .perform(get("/api/v1/step-counter/users/1/measurements")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .param("startDate", startDate)
+                        .param("startDate", LocalDateTime.now().minusMinutes(10).toString())
                         .param("types", new String[]{StepMeasurementType.DAILY_ACTIVITY.name()}))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        List<StepMeasurementResponse> measurements = fromJson(
-                progressResult.getResponse().getContentAsString(),
-                new TypeReference<List<StepMeasurementResponse>>(){}
-        );
+        List<StepMeasurementResponse> measurements = getMeasurementResponseAsList(historyResult);
 
         assertThat(measurements).hasSize(2);
     }
@@ -105,25 +89,21 @@ class StepCounterProfileControllerTest extends AbstractIntegrationTest {
     @Test
     @WithMockUser
     void shouldAddMeasurementsAndGetAverageSteps() throws Exception {
-        List<StepMeasurementRequest> measurementRequests = List.of(
+
+        addMeasurements(
                 new StepMeasurementRequest(1L, 9000L, StepMeasurementType.DAILY_ACTIVITY, LocalDateTime.now()),
                 new StepMeasurementRequest(1L, 8000L, StepMeasurementType.TRAINING, LocalDateTime.now()),
                 new StepMeasurementRequest(1L, 10000L, StepMeasurementType.DAILY_ACTIVITY, LocalDateTime.now())
         );
-        for (StepMeasurementRequest measurementRequest : measurementRequests) {
-            addMeasurement(measurementRequest);
-        }
 
-        String startDate = LocalDateTime.now().minusMinutes(10).toString();
-
-        MvcResult progressResult = mockMvc
+        MvcResult avgStepsResult = mockMvc
                 .perform(get("/api/v1/step-counter/users/1/measurements/steps/average")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .param("startDate", startDate))
+                        .param("startDate", LocalDateTime.now().minusMinutes(10).toString()))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Long averageSteps = Long.valueOf(progressResult.getResponse().getContentAsString());
+        Long averageSteps = Long.valueOf(avgStepsResult.getResponse().getContentAsString());
 
         assertThat(averageSteps).isEqualTo(9000L);
     }
@@ -131,26 +111,22 @@ class StepCounterProfileControllerTest extends AbstractIntegrationTest {
     @Test
     @WithMockUser
     void shouldAddMeasurementsAndGetAverageStepsWithSpecifiedTypes() throws Exception {
-        List<StepMeasurementRequest> measurementRequests = List.of(
+
+        addMeasurements(
                 new StepMeasurementRequest(1L, 9000L, StepMeasurementType.DAILY_ACTIVITY, LocalDateTime.now()),
                 new StepMeasurementRequest(1L, 8000L, StepMeasurementType.TRAINING, LocalDateTime.now()),
                 new StepMeasurementRequest(1L, 10000L, StepMeasurementType.DAILY_ACTIVITY, LocalDateTime.now())
         );
-        for (StepMeasurementRequest measurementRequest : measurementRequests) {
-            addMeasurement(measurementRequest);
-        }
 
-        String startDate = LocalDateTime.now().minusMinutes(10).toString();
-
-        MvcResult progressResult = mockMvc
+        MvcResult avgStepsResult = mockMvc
                 .perform(get("/api/v1/step-counter/users/1/measurements/steps/average")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .param("startDate", startDate)
+                        .param("startDate", LocalDateTime.now().minusMinutes(10).toString())
                         .param("types", new String[]{StepMeasurementType.DAILY_ACTIVITY.name()}))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Long averageSteps = Long.valueOf(progressResult.getResponse().getContentAsString());
+        Long averageSteps = Long.valueOf(avgStepsResult.getResponse().getContentAsString());
 
         assertThat(averageSteps).isEqualTo(9500L);
     }
@@ -162,24 +138,21 @@ class StepCounterProfileControllerTest extends AbstractIntegrationTest {
         LocalDateTime inBetweenDate = LocalDateTime.of(2020, 1, 5, 1, 1);
         LocalDateTime finishDate = LocalDateTime.of(2020, 1, 11, 1, 1);
 
-        List<StepMeasurementRequest> measurementRequests = List.of(
+        addMeasurements(
                 new StepMeasurementRequest(1L, 9000L, StepMeasurementType.DAILY_ACTIVITY, startDate),
                 new StepMeasurementRequest(1L, 8000L, StepMeasurementType.TRAINING, inBetweenDate),
                 new StepMeasurementRequest(1L, 10000L, StepMeasurementType.DAILY_ACTIVITY, finishDate)
         );
-        for (StepMeasurementRequest measurementRequest : measurementRequests) {
-            addMeasurement(measurementRequest);
-        }
 
 
-        MvcResult progressResult = mockMvc
+        MvcResult avgDailyStepsResult = mockMvc
                 .perform(get("/api/v1/step-counter/users/1/measurements/steps/average-daily")
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("startDate", startDate.toString()))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Long averageSteps = Long.valueOf(progressResult.getResponse().getContentAsString());
+        Long averageSteps = Long.valueOf(avgDailyStepsResult.getResponse().getContentAsString());
 
         assertThat(averageSteps).isEqualTo(2700L);
     }
@@ -191,17 +164,14 @@ class StepCounterProfileControllerTest extends AbstractIntegrationTest {
         LocalDateTime inBetweenDate = LocalDateTime.of(2020, 1, 5, 1, 1);
         LocalDateTime finishDate = LocalDateTime.of(2020, 1, 11, 1, 1);
 
-        List<StepMeasurementRequest> measurementRequests = List.of(
+        addMeasurements(
                 new StepMeasurementRequest(1L, 9000L, StepMeasurementType.DAILY_ACTIVITY, startDate),
                 new StepMeasurementRequest(1L, 8000L, StepMeasurementType.TRAINING, inBetweenDate),
                 new StepMeasurementRequest(1L, 10000L, StepMeasurementType.DAILY_ACTIVITY, finishDate)
         );
-        for (StepMeasurementRequest measurementRequest : measurementRequests) {
-            addMeasurement(measurementRequest);
-        }
 
 
-        MvcResult progressResult = mockMvc
+        MvcResult avgDailyStepsResult = mockMvc
                 .perform(get("/api/v1/step-counter/users/1/measurements/steps/average-daily")
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("startDate", startDate.toString())
@@ -209,14 +179,47 @@ class StepCounterProfileControllerTest extends AbstractIntegrationTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Long averageSteps = Long.valueOf(progressResult.getResponse().getContentAsString());
+        Long averageSteps = Long.valueOf(avgDailyStepsResult.getResponse().getContentAsString());
 
         assertThat(averageSteps).isEqualTo(1900L);
+    }
+
+    private StepMeasurementResponse getMeasurementResponse(MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
+        return fromJson(result.getResponse().getContentAsString(), StepMeasurementResponse.class);
+    }
+
+    private List<StepMeasurementResponse> getMeasurementResponseAsList(MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
+        return fromJson(
+                result.getResponse().getContentAsString(),
+                new TypeReference<List<StepMeasurementResponse>>(){}
+        );
+    }
+
+
+    private void addMeasurements(StepMeasurementRequest... measurementRequests) throws Exception {
+        addMeasurements(List.of(measurementRequests));
+    }
+
+    private void addMeasurements(List<StepMeasurementRequest> measurementRequests) throws Exception {
+        for (var measurement : measurementRequests) {
+            addMeasurement(measurement);
+        }
     }
 
     private ResultActions addMeasurement(StepMeasurementRequest measurementRequest) throws Exception {
         return mockMvc.perform(post(MEASUREMENT_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJsonString(measurementRequest)));
+    }
+
+
+    private List<StepMeasurementRequest> createMeasurementRequests(int numberOfRequests) {
+        return IntStream.range(0, numberOfRequests)
+                .mapToObj(i -> defaultMeasurementRequest())
+                .collect(Collectors.toList());
+    }
+
+    private StepMeasurementRequest defaultMeasurementRequest() {
+        return new StepMeasurementRequest(1L, 9000L, StepMeasurementType.DAILY_ACTIVITY, LocalDateTime.now());
     }
 }

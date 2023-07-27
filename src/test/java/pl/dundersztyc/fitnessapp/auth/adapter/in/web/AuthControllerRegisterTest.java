@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultActions;
 import pl.dundersztyc.fitnessapp.AbstractIntegrationTest;
 import pl.dundersztyc.fitnessapp.user.application.port.out.SaveUserPort;
 import pl.dundersztyc.fitnessapp.user.domain.User;
@@ -28,11 +29,8 @@ public class AuthControllerRegisterTest extends AbstractIntegrationTest {
 
         User user = defaultUser().build();
 
-        mockMvc
-            .perform(post(REGISTER_URL)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(toJsonString(user)))
-            .andExpect(status().isCreated());
+        register(toJsonString(user))
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -44,11 +42,8 @@ public class AuthControllerRegisterTest extends AbstractIntegrationTest {
         JSONObject incorrectUser = new JSONObject(toJsonString(user));
         incorrectUser.put("password", null);
 
-        mockMvc
-            .perform(post(REGISTER_URL)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(incorrectUser.toString()))
-            .andExpect(status().isBadRequest());
+        register(incorrectUser.toString())
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -57,11 +52,15 @@ public class AuthControllerRegisterTest extends AbstractIntegrationTest {
         User user = defaultUser().build();
         saveUserPort.save(user);
 
-        mockMvc
+        register(toJsonString(user))
+                .andExpect(status().isBadRequest());
+    }
+
+    private ResultActions register(String user) throws Exception {
+        return mockMvc
                 .perform(post(REGISTER_URL)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJsonString(user)))
-                .andExpect(status().isBadRequest());
+                        .content(user));
     }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import pl.dundersztyc.fitnessapp.AbstractIntegrationTest;
 import pl.dundersztyc.fitnessapp.auth.application.port.in.AuthRequest;
 import pl.dundersztyc.fitnessapp.user.application.port.out.SaveUserPort;
@@ -39,10 +40,7 @@ class AuthControllerLoginTest extends AbstractIntegrationTest {
 
         AuthRequest authRequest = new AuthRequest(USERNAME, PASSWORD);
 
-        MvcResult loginResult = mockMvc
-            .perform(post(LOGIN_URL)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(toJsonString(authRequest)))
+        MvcResult loginResult = login(authRequest)
             .andExpect(status().isOk())
             .andExpect(header().exists(HttpHeaders.AUTHORIZATION))
             .andReturn();
@@ -58,10 +56,7 @@ class AuthControllerLoginTest extends AbstractIntegrationTest {
         saveUser(USERNAME, PASSWORD);
         AuthRequest authRequest = new AuthRequest("incorrectUsername", PASSWORD);
 
-        mockMvc
-            .perform(post(LOGIN_URL)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(toJsonString(authRequest)))
+        login(authRequest)
             .andExpect(status().isUnauthorized())
             .andExpect(header().doesNotExist(HttpHeaders.AUTHORIZATION))
             .andExpect(content().string(Matchers.blankString()));
@@ -73,13 +68,17 @@ class AuthControllerLoginTest extends AbstractIntegrationTest {
         saveUser(USERNAME, PASSWORD);
         AuthRequest authRequest = new AuthRequest(USERNAME, "incorrectPassword");
 
-        mockMvc
-            .perform(post(LOGIN_URL)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(toJsonString(authRequest)))
+        login(authRequest)
             .andExpect(status().isUnauthorized())
             .andExpect(header().doesNotExist(HttpHeaders.AUTHORIZATION))
             .andExpect(content().string(Matchers.blankString()));
+    }
+
+    private ResultActions login(AuthRequest authRequest) throws Exception {
+        return mockMvc
+                .perform(post(LOGIN_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJsonString(authRequest)));
     }
 
     private void saveUser(String username, String password) {
