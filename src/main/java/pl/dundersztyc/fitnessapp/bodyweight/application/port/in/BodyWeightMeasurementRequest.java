@@ -1,13 +1,13 @@
 package pl.dundersztyc.fitnessapp.bodyweight.application.port.in;
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.NonNull;
 
 import java.math.BigDecimal;
 
 import static pl.dundersztyc.fitnessapp.common.validation.Validation.validate;
 
-public record BodyWeightMeasurementRequest(@NonNull Long userId, @Positive @NonNull BigDecimal weight) {
+public record BodyWeightMeasurementRequest(@NotNull Long userId, @Positive @NotNull BigDecimal weight) {
 
     public BodyWeightMeasurementRequest(
             Long userId,

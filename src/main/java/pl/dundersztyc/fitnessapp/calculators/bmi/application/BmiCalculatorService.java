@@ -5,13 +5,15 @@ import pl.dundersztyc.fitnessapp.calculators.bmi.application.port.in.CalculateBm
 import pl.dundersztyc.fitnessapp.calculators.bmi.application.port.in.DetermineBmiCategoryUseCase;
 import pl.dundersztyc.fitnessapp.calculators.bmi.domain.Bmi;
 import pl.dundersztyc.fitnessapp.calculators.bmi.domain.BmiCategory;
+import pl.dundersztyc.fitnessapp.common.height.Height;
+import pl.dundersztyc.fitnessapp.common.weight.Weight;
 
 @Service
 class BmiCalculatorService implements CalculateBmiUseCase, DetermineBmiCategoryUseCase {
 
     @Override
-    public double calculateBmi(double weightInKg, double heightInM) {
-        return new Bmi(weightInKg, heightInM).getValue();
+    public double calculateBmi(Weight weight, Height height) {
+        return new Bmi(weight, height).getValue();
     }
 
     @Override

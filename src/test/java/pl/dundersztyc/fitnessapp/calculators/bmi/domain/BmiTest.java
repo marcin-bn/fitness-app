@@ -4,6 +4,8 @@ import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import pl.dundersztyc.fitnessapp.common.height.Height;
+import pl.dundersztyc.fitnessapp.common.weight.Weight;
 
 import java.util.stream.Stream;
 
@@ -15,7 +17,7 @@ class BmiTest {
     @ParameterizedTest
     @MethodSource("provideInputAndResultForCalculateBmi")
     void calculateBmi(double weightInKg, double heightInM, double expectedBmi) {
-        Bmi bmi = new Bmi(weightInKg, heightInM);
+        Bmi bmi = new Bmi(Weight.fromKg(weightInKg), Height.fromM(heightInM));
         assertThat(bmi.getValue()).isEqualTo(expectedBmi);
     }
 
@@ -23,7 +25,7 @@ class BmiTest {
     @MethodSource("invalidBmiParams")
     void shouldThrowWhenCalculateBmiWithWeightOrHeightLessThanOrEqualTo0(double weightInKg, double heightInM) {
         assertThrows(ConstraintViolationException.class, () -> {
-           Bmi bmi = new Bmi(weightInKg, heightInM);
+           Bmi bmi = new Bmi(Weight.fromKg(weightInKg), Height.fromM(heightInM));
         });
     }
 

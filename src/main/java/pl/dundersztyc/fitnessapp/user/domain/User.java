@@ -1,6 +1,5 @@
 package pl.dundersztyc.fitnessapp.user.domain;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -34,7 +33,7 @@ public class User implements UserDetails {
     @NonNull
     private String password;
 
-    @NotNull
+    @NonNull
     private Set<Role> authorities;
 
     public static User withId(

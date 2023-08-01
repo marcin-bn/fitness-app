@@ -1,25 +1,25 @@
 package pl.dundersztyc.fitnessapp.calculators.bmi.domain;
 
+import pl.dundersztyc.fitnessapp.calculators.common.CategoryRange;
+
 public enum BmiCategory {
 
-    UNDER_WEIGHT     ("UNDER_WEIGHT", 0.0, 18.5),
-    NORMAL_WEIGHT   ("NORMAL_WEIGHT", 18.5, 25.0),
-    OVER_WEIGHT     ("OVER_WEIGHT", 25.0, 30.0),
-    OBESE           ("OBESE", 30.0, 99.9);
+    UNDER_WEIGHT("UNDER_WEIGHT", new CategoryRange(0.0, 18.5)),
+    NORMAL_WEIGHT("NORMAL_WEIGHT", new CategoryRange(18.5, 25.0)),
+    OVER_WEIGHT("OVER_WEIGHT", new CategoryRange(25.0, 30.0)),
+    OBESE("OBESE", new CategoryRange(30.0, 99.9));
 
     private final String name;
-    private final double lowerLimit;
-    private final double upperLimit;
+    private final CategoryRange categoryRange;
 
-    BmiCategory(String name, double lowerLimit, double upperLimit) {
+    BmiCategory(String name, CategoryRange categoryRange) {
         this.name = name;
-        this.lowerLimit = lowerLimit;
-        this.upperLimit = upperLimit;
+        this.categoryRange = categoryRange;
     }
 
     public static BmiCategory determineCategory(double bmi) {
         for (var category : BmiCategory.values()) {
-            if (category.lowerLimit <= bmi && bmi < category.upperLimit) {
+            if (category.categoryRange.isInRange(bmi)) {
                 return category;
             }
         }

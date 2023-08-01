@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.dundersztyc.fitnessapp.calculators.bmi.application.port.in.CalculateBmiUseCase;
 import pl.dundersztyc.fitnessapp.calculators.bmi.application.port.in.DetermineBmiCategoryUseCase;
 import pl.dundersztyc.fitnessapp.calculators.bmi.domain.BmiCategory;
+import pl.dundersztyc.fitnessapp.common.height.Height;
+import pl.dundersztyc.fitnessapp.common.weight.Weight;
 
 @RestController
 @RequestMapping("api/v1/calculators/bmi")
@@ -20,7 +22,7 @@ public class BmiCalculatorController {
     @GetMapping
     public double calculateBmi(@RequestParam("weight") double weightInKg,
                                @RequestParam("height") double heightInM) {
-        return calculateBmiUseCase.calculateBmi(weightInKg, heightInM);
+        return calculateBmiUseCase.calculateBmi(Weight.fromKg(weightInKg), Height.fromM(heightInM));
     }
 
     @GetMapping("/category")

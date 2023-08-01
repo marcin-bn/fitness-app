@@ -1,9 +1,9 @@
 package pl.dundersztyc.fitnessapp.auth.application.port.in;
 
-import jakarta.validation.constraints.NotNull;
+import lombok.NonNull;
 
 public record AuthRequest(
-        @NotNull String username,
-        @NotNull String password) {
+        @NonNull String username,
+        @NonNull String password) {
 
 }

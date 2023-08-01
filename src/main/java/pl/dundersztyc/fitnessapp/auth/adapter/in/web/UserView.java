@@ -1,6 +1,6 @@
 package pl.dundersztyc.fitnessapp.auth.adapter.in.web;
 
-import jakarta.validation.constraints.NotNull;
+import lombok.NonNull;
 
-record UserView(@NotNull String username)  {
+record UserView(@NonNull String username)  {
 }

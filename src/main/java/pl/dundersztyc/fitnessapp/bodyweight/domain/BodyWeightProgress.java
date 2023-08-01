@@ -12,11 +12,9 @@ public class BodyWeightProgress {
     private final static int SCALE = 2;
     private final static RoundingMode ROUNDING_MODE = RoundingMode.DOWN;
 
-    @NonNull
-    BigDecimal weightLoss;
+    @NonNull BigDecimal weightLoss;
 
-    @NonNull
-    BigDecimal weeklyWeightLoss;
+    @NonNull BigDecimal weeklyWeightLoss;
 
     public BodyWeightProgress(@NonNull BigDecimal weightLoss, long weeks) {
         if (weeks < 0) {
