@@ -3,6 +3,7 @@ package pl.dundersztyc.fitnessapp.calculators.caloriesburned.domain;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import pl.dundersztyc.fitnessapp.common.weight.Weight;
 
 import java.util.stream.Stream;
@@ -19,7 +20,7 @@ class ActivityTypeTest {
     }
 
     @ParameterizedTest
-    @MethodSource("invalidParams")
+    @ValueSource(longs = {0, -1})
     void shouldThrowWhenCalculateCaloriesBurnedWithInvalidMinutes(long minutes) {
         assertThrows(IllegalArgumentException.class, () -> {
            ActivityType.SOCCER.calculateCaloriesBurned(minutes, Weight.fromKg(70));
@@ -34,10 +35,4 @@ class ActivityTypeTest {
         );
     }
 
-    private static Stream<Arguments> invalidParams() {
-        return Stream.of(
-                Arguments.of(0),
-                Arguments.of(-1)
-        );
-    }
 }

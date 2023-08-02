@@ -3,6 +3,7 @@ package pl.dundersztyc.fitnessapp.calculators.caloricneeds.domain;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import pl.dundersztyc.fitnessapp.common.height.Height;
 import pl.dundersztyc.fitnessapp.common.weight.Weight;
 import pl.dundersztyc.fitnessapp.user.domain.Gender;
@@ -21,7 +22,7 @@ class BmrTest {
     }
 
     @ParameterizedTest
-    @MethodSource("invalidAge")
+    @ValueSource(longs = {0, -1, -100})
     void shouldThrowWhenCalculateCaloricNeedsWithInvalidAge(long age) {
         assertThrows(IllegalArgumentException.class, () -> {
             Bmr.calculateBmr(age, Weight.fromKg(65), Height.fromCm(180), Gender.MAN);
@@ -36,11 +37,4 @@ class BmrTest {
         );
     }
 
-    private static Stream<Arguments> invalidAge() {
-        return Stream.of(
-                Arguments.of(0),
-                Arguments.of(-1),
-                Arguments.of(-100)
-        );
-    }
 }
