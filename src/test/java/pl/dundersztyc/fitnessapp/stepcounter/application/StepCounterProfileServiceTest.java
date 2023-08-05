@@ -36,7 +36,6 @@ class StepCounterProfileServiceTest {
 
         profileService.addMeasurement(measurementRequest);
 
-        thenProfileHasBeenLoaded(userId);
         thenMeasurementHasBeenAdded(measurementRequest);
     }
 

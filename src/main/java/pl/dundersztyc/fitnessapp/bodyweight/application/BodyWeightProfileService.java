@@ -9,6 +9,7 @@ import pl.dundersztyc.fitnessapp.bodyweight.application.port.in.LoadBodyWeightMe
 import pl.dundersztyc.fitnessapp.bodyweight.application.port.out.LoadBodyWeightProfilePort;
 import pl.dundersztyc.fitnessapp.bodyweight.application.port.out.UpdateBodyWeightProfilePort;
 import pl.dundersztyc.fitnessapp.bodyweight.domain.BodyWeightMeasurement;
+import pl.dundersztyc.fitnessapp.bodyweight.domain.BodyWeightMeasurementWindow;
 import pl.dundersztyc.fitnessapp.bodyweight.domain.BodyWeightProfile;
 import pl.dundersztyc.fitnessapp.bodyweight.domain.BodyWeightProgress;
 import pl.dundersztyc.fitnessapp.user.domain.User;
@@ -33,8 +34,7 @@ public class BodyWeightProfileService implements AddBodyWeightMeasurementUseCase
                 .timestamp(LocalDateTime.now())
                 .build();
 
-        LocalDateTime baselineDate = LocalDateTime.now().minusWeeks(2);
-        BodyWeightProfile profile = loadBodyWeightProfilePort.load(new User.UserId(measurementRequest.userId()), baselineDate);
+        BodyWeightProfile profile = new BodyWeightProfile(new User.UserId(measurementRequest.userId()), new BodyWeightMeasurementWindow());
         profile.addMeasurement(measurement);
 
         updateProfilePort.updateMeasurements(profile);

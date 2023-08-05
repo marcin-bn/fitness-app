@@ -11,6 +11,7 @@ import pl.dundersztyc.fitnessapp.stepcounter.application.port.out.UpdateStepCoun
 import pl.dundersztyc.fitnessapp.stepcounter.domain.StepCounterProfile;
 import pl.dundersztyc.fitnessapp.stepcounter.domain.StepMeasurement;
 import pl.dundersztyc.fitnessapp.stepcounter.domain.StepMeasurementType;
+import pl.dundersztyc.fitnessapp.stepcounter.domain.StepMeasurementWindow;
 import pl.dundersztyc.fitnessapp.user.domain.User;
 
 import java.time.LocalDateTime;
@@ -33,12 +34,10 @@ public class StepCounterProfileService implements AddStepMeasurementUseCase, Loa
                 .timestamp(measurementRequest.timestamp())
                 .build();
 
-        LocalDateTime baselineDate = measurementRequest.timestamp().minusWeeks(2);
-        StepCounterProfile profile = loadStepCounterProfilePort.load(new User.UserId(measurementRequest.userId()), baselineDate);
+        StepCounterProfile profile = new StepCounterProfile(new User.UserId(measurementRequest.userId()), new StepMeasurementWindow());
         profile.addMeasurement(measurement);
 
         updateStepCounterProfilePort.updateMeasurements(profile);
-
         return measurement;
     }
 
