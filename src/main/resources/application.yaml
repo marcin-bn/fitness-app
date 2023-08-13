@@ -16,3 +16,7 @@ spring:
 rsa:
   public: ${RSA_PUBLIC}
   private: ${RSA_PRIVATE}
+external-api:
+  edamam:
+    app-id: ${EDAMAM_APP_ID}
+    app-key: ${EDAMAM_APP_KEY}

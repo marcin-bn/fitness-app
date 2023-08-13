@@ -216,6 +216,7 @@ class StepCounterProfileServiceTest {
     private void givenProfileWithMeasurementsAndTypes(List<StepMeasurement> measurements, List<StepMeasurementType> types) {
         assertThat(types).hasSizeGreaterThan(0);
 
+        // set correct type
         List<StepMeasurement> measurementSpies = new ArrayList<>();
         for (StepMeasurement measurement : measurements) {
             StepMeasurement measurementSpy = spy(measurement);
