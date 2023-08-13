@@ -37,6 +37,8 @@ jobs:
           POSTGRES_DB_TEST: ${{ secrets.POSTGRES_DB_TEST }}
           RSA_PUBLIC: ${{ secrets.RSA_PUBLIC }}
           RSA_PRIVATE: ${{ secrets.RSA_PRIVATE }}
+          EDAMAM_APP_ID: ${{ secrets.EDAMAM_APP_ID }}
+          EDAMAM_APP_KEY: ${{ secrets.EDAMAM_APP_KEY }}
 
       - name: Build and run Unit/Integration Tests with Maven
         run: mvn -ntp -B verify
@@ -49,3 +51,5 @@ jobs:
           POSTGRES_DB_TEST: ${{ secrets.POSTGRES_DB_TEST }}
           RSA_PUBLIC: ${{ secrets.RSA_PUBLIC }}
           RSA_PRIVATE: ${{ secrets.RSA_PRIVATE }}
+          EDAMAM_APP_ID: ${{ secrets.EDAMAM_APP_ID }}
+          EDAMAM_APP_KEY: ${{ secrets.EDAMAM_APP_KEY }}
