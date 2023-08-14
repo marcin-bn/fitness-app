@@ -9,6 +9,7 @@ public abstract class GetProductByIdHandler implements ChainHandler<GetProductBy
 
     private GetProductByIdHandler nextHandler;
 
+    @Override
     public void setNextHandler(GetProductByIdHandler nextHandler) {
         this.nextHandler = nextHandler;
     }

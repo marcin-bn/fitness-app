@@ -19,11 +19,6 @@ import static pl.dundersztyc.fitnessapp.common.JsonMapper.toJsonString;
 class BfiCalculatorControllerTest extends AbstractIntegrationTest {
 
     @Test
-    void test() {
-        System.out.println(Gender.WOMAN.toString());
-    }
-
-    @Test
     @WithMockUser
     void shouldCalculateBfi() throws Exception {
 

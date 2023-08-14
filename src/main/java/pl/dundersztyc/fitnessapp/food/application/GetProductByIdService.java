@@ -20,8 +20,8 @@ public class GetProductByIdService implements GetProductByIdUseCase {
     @Override
     public Product getProductById(String productId) {
         LinkedHashSet<GetProductByIdHandler> handlers = new LinkedHashSet<>();
-        handlers.add(edamamHandler);
         handlers.add(openFoodFactsHandler);
+        handlers.add(edamamHandler);
         GetProductByIdHandler mainHandler = ConfigChainHandler.configChainHandler(handlers);
 
         return mainHandler.handleGetProductById(productId);

@@ -25,7 +25,7 @@ class EdamamGetProductByIdHandlerTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void shouldSetFieldsToNullWhenDataIsMissing() {
+    void shouldSetProductFieldsToNullWhenDataIsMissing() {
         // For some products, data is missing from the external API.
         Optional<Product> optProduct = handler.getProductById("food_a8dytckbmjx99eaduccs6bowpa5m");
 

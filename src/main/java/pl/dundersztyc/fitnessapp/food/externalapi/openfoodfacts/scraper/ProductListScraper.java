@@ -3,19 +3,23 @@ package pl.dundersztyc.fitnessapp.food.externalapi.openfoodfacts.scraper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class ProductListScraper {
 
-    public List<String> getProductIds(String searchTerm) throws IOException {
-        Document doc = Jsoup.connect("https://pl.openfoodfacts.org/cgi/search.pl?search_terms=ketchup+roleski%5C&search_simple=1&action=process").get();
+    public List<String> getProductIds(String searchTerm, int numberOfIds) throws IOException {
+        String URL = "https://pl.openfoodfacts.org/cgi/search.pl?search_terms=" + searchTerm + "&search_simple=1&action=process";
+        Document doc = Jsoup.connect(URL).get();
         var products = doc.select(".products > li");
         return products.stream()
                 .map(this::extractHrefFromProduct)
                 .map(this::extractProductIdFromHref)
+                .limit(numberOfIds)
                 .collect(Collectors.toList());
     }
 
