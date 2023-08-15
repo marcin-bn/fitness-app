@@ -3,6 +3,7 @@ package pl.dundersztyc.fitnessapp.food.externalapi.edamam;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.dundersztyc.fitnessapp.AbstractIntegrationTest;
+import pl.dundersztyc.fitnessapp.food.application.NoSuchElementFoundException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,10 +24,10 @@ class EdamamGetProductByBarcodeServiceTest extends AbstractIntegrationTest {
 
     @Test
     void shouldThrowWhenBarcodeIsInvalid() {
-       IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+        NoSuchElementFoundException exception = assertThrows(NoSuchElementFoundException.class,
                () -> {getProductByBarcodeService.getProductByBarcode("invalid barcode");}
-       );
-       assertThat(exception.getMessage()).isEqualTo("cannot find product with given barcode");
+        );
+        assertThat(exception.getMessage()).isEqualTo("cannot find product with given barcode");
     }
 
 }

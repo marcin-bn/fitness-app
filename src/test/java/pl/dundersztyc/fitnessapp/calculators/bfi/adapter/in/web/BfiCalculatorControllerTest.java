@@ -56,6 +56,28 @@ class BfiCalculatorControllerTest extends AbstractIntegrationTest {
         assertThat(category).isEqualTo(BfiCategory.FITNESS);
     }
 
+    @Test
+    @WithMockUser
+    void shouldReturnBadRequestWhenBfiOrGenderIsInvalid() throws Exception {
+
+        mockMvc.perform(get("/api/v1/calculators/bfi/category")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("bfi", String.valueOf(-2.0))
+                        .param("gender", Gender.WOMAN.toString()))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser
+    void shouldReturnBadRequestWhenGenderIsInvalid() throws Exception {
+
+        mockMvc.perform(get("/api/v1/calculators/bfi/category")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("bfi", String.valueOf(15.0))
+                        .param("gender", "invalid gender"))
+                .andExpect(status().isBadRequest());
+    }
+
     private BfiCategory getBfiCategoryFromResponse(MvcResult result) throws UnsupportedEncodingException {
         return BfiCategory.valueOf(
                 result.getResponse().getContentAsString().replaceAll("\"", "")

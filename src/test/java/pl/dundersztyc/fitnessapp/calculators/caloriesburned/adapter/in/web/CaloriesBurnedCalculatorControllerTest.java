@@ -34,4 +34,37 @@ class CaloriesBurnedCalculatorControllerTest extends AbstractIntegrationTest {
 
         assertThat(caloriesBurned).isEqualTo(281);
     }
+
+    @Test
+    @WithMockUser
+    void shouldReturnBadRequestWhenActivityTypeIsInvalid() throws Exception {
+        mockMvc.perform(get("/api/v1/calculators/calories-burned")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("activity", "invalid activity")
+                        .param("minutes", Long.toString(10))
+                        .param("weight", Double.toString(10)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser
+    void shouldReturnBadRequestWhenMinutesAreInvalid() throws Exception {
+        mockMvc.perform(get("/api/v1/calculators/calories-burned")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("activity", ActivityType.CYCLING.toString())
+                        .param("minutes", Long.toString(-10))
+                        .param("weight", Double.toString(10)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser
+    void shouldReturnBadRequestWhenWeightIsInvalid() throws Exception {
+        mockMvc.perform(get("/api/v1/calculators/calories-burned")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("activity", ActivityType.CYCLING.toString())
+                        .param("minutes", Long.toString(10))
+                        .param("weight", Double.toString(-10)))
+                .andExpect(status().isBadRequest());
+    }
 }

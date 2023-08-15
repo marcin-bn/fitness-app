@@ -53,6 +53,38 @@ class BmiCalculatorControllerTest extends AbstractIntegrationTest {
         assertThat(category).isEqualTo(BmiCategory.NORMAL_WEIGHT);
     }
 
+    @Test
+    @WithMockUser
+    void shouldReturnBadRequestWhenWeightIsInvalid() throws Exception {
+
+        mockMvc.perform(get("/api/v1/calculators/bmi")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("weight", Double.toString(-20))
+                        .param("height", Double.toString(175)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser
+    void shouldReturnBadRequestWhenHeightIsInvalid() throws Exception {
+
+        mockMvc.perform(get("/api/v1/calculators/bmi")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("weight", Double.toString(80))
+                        .param("height", Double.toString(-100)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser
+    void shouldReturnBadRequestWhenBmiIsInvalid() throws Exception {
+
+        mockMvc.perform(get("/api/v1/calculators/bmi/category")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("bmi", Double.toString(-20)))
+                .andExpect(status().isBadRequest());
+    }
+
     private BmiCategory getBmiCategoryFromResponse(MvcResult result) throws UnsupportedEncodingException {
         return BmiCategory.valueOf(
                 result.getResponse().getContentAsString().replaceAll("\"", "")

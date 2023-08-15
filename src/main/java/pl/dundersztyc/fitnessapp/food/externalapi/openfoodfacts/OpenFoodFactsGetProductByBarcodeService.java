@@ -3,6 +3,7 @@ package pl.dundersztyc.fitnessapp.food.externalapi.openfoodfacts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import pl.dundersztyc.fitnessapp.food.application.NoSuchElementFoundException;
 import pl.dundersztyc.fitnessapp.food.application.port.in.GetProductByBarcodeUseCase;
 import pl.dundersztyc.fitnessapp.food.domain.Product;
 
@@ -21,7 +22,7 @@ public class OpenFoodFactsGetProductByBarcodeService implements GetProductByBarc
         Optional<Product> product = getProductByIdHandler.getProductById(id);
 
         if (product.isEmpty()) {
-            throw new IllegalArgumentException("cannot find product with given barcode");
+            throw new NoSuchElementFoundException("cannot find product with given barcode");
         }
         return product.get();
     }

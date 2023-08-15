@@ -7,7 +7,6 @@ import pl.dundersztyc.fitnessapp.food.externalapi.common.chainhandler.ConfigChai
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertThrows;
@@ -42,7 +41,7 @@ class GetProductsByNameHandlerTest {
 
     @Test
     void shouldThrowWhenProductsWithGivenNameDoesNotExist() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+        NoSuchElementFoundException exception = assertThrows(NoSuchElementFoundException.class,
                 () -> {new ProductDoesNotExistFakeHandler().handleGetProductsByName("any name", 1);}
         );
         assertThat(exception.getMessage()).isEqualTo("cannot find products with given name");

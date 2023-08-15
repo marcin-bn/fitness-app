@@ -25,7 +25,7 @@ public abstract class GetProductsByNameHandler implements ChainHandler<GetProduc
         }
 
         if (products.isEmpty()) {
-            throw new IllegalArgumentException("cannot find products with given name");
+            throw new NoSuchElementFoundException("cannot find products with given name");
         }
         return products;
     }
