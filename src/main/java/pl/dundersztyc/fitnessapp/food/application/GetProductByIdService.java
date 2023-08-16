@@ -12,7 +12,7 @@ import java.util.LinkedHashSet;
 
 @Service
 @RequiredArgsConstructor
-public class GetProductByIdService implements GetProductByIdUseCase {
+class GetProductByIdService implements GetProductByIdUseCase {
 
     private final EdamamGetProductByIdHandler edamamHandler;
     private final OpenFoodFactsGetProductByIdHandler openFoodFactsHandler;

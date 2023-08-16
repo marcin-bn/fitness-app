@@ -39,7 +39,7 @@ class GetProductByIdHandlerTest {
 
     @Test
     void shouldThrowWhenProductDoesNotExist() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+        NoSuchElementFoundException exception = assertThrows(NoSuchElementFoundException.class,
                 () -> {new ProductDoesNotExistFakeHandler().handleGetProductById("anyId");}
         );
         assertThat(exception.getMessage()).isEqualTo("cannot find product with given id");

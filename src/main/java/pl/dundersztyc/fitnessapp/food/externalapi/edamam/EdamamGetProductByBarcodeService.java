@@ -11,7 +11,7 @@ import pl.dundersztyc.fitnessapp.food.externalapi.edamam.model.ProductParserData
 
 @Service
 @RequiredArgsConstructor
-public class EdamamGetProductByBarcodeService implements GetProductByBarcodeUseCase {
+class EdamamGetProductByBarcodeService implements GetProductByBarcodeUseCase {
 
     private final EdamamUrlProvider urlProvider;
     private final EdamamGetProductByIdHandler getProductByIdHandler;

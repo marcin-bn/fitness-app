@@ -33,7 +33,7 @@ public class EdamamGetProductByIdHandler extends GetProductByIdHandler {
                 prepareProductIdRequest(productId, ProductMetrics.defaultMetrics()),
                 ProductData.class
         );
-        if (productData.getTotalNutrients().size() == 0) {
+        if (productData.getTotalNutrients().isEmpty()) {
             return Optional.empty();
         }
         return Optional.of(productMapper.mapToProduct(productId, productData));

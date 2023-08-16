@@ -17,7 +17,7 @@ public abstract class GetProductByIdHandler implements ChainHandler<GetProductBy
     public Product handleGetProductById(String productId) {
         if (canHandle(productId)) {
             return getProductById(productId)
-                    .orElseThrow(() -> new IllegalArgumentException("cannot find product with given id"));
+                    .orElseThrow(() -> new NoSuchElementFoundException("cannot find product with given id"));
         }
         else if (nextHandler != null) {
             return nextHandler.handleGetProductById(productId);

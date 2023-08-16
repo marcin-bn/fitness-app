@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class GetProductsByNameService implements GetProductsByNameUseCase {
+class GetProductsByNameService implements GetProductsByNameUseCase {
 
     private final static int NUMBER_OF_PRODUCTS_PER_HANDLER = 5;
 

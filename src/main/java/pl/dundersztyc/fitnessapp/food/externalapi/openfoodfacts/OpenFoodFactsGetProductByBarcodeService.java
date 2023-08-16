@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Primary
-public class OpenFoodFactsGetProductByBarcodeService implements GetProductByBarcodeUseCase {
+class OpenFoodFactsGetProductByBarcodeService implements GetProductByBarcodeUseCase {
 
     private final OpenFoodFactsGetProductByIdHandler getProductByIdHandler;
 
