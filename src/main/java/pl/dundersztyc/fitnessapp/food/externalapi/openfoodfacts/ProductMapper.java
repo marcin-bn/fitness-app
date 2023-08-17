@@ -37,7 +37,7 @@ class ProductMapper {
         Double iron = getNutrientQuantity.apply("iron_100g");
 
         return Product.builder()
-                .id(productId)
+                .id(new Product.ProductId(productId))
                 .name(productData.getProductName())
                 .kcal(kcal)
                 .fat(getNutrientFromGrams(fat))

@@ -33,7 +33,7 @@ public class ProductResponse {
 
     public static ProductResponse of(Product product) {
         return ProductResponse.builder()
-                .id(product.getId())
+                .id(product.getId().value())
                 .name(product.getName())
                 .kcal(product.getKcal())
                 .fat(getNutrient(product.getFat(), NutrientResponse.Unit.Gram))

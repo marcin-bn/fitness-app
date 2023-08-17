@@ -19,7 +19,8 @@ class EdamamGetProductByBarcodeServiceTest extends AbstractIntegrationTest {
 
         assertThat(product).isNotNull();
         assertThat(product.getId()).isNotNull();
-        assertThat(product.getId()).isNotBlank();
+        assertThat(product.getId().value()).isNotNull();
+        assertThat(product.getId().value()).isNotBlank();
     }
 
     @Test

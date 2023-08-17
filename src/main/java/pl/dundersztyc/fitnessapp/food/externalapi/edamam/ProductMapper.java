@@ -37,7 +37,7 @@ class ProductMapper {
 
 
         return Product.builder()
-                .id(productId)
+                .id(new Product.ProductId(productId))
                 .name(productData.getProductName())
                 .kcal(kcal)
                 .fat(getNutrient(fat, Nutrient::fromGrams))

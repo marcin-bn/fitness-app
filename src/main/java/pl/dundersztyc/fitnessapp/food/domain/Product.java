@@ -1,6 +1,7 @@
 package pl.dundersztyc.fitnessapp.food.domain;
 
 import lombok.Builder;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
@@ -9,7 +10,7 @@ import lombok.Value;
 @Builder
 public class Product {
 
-    private final String id;
+    private final ProductId id;
     private final String name;
 
     private final Double kcal;
@@ -28,6 +29,9 @@ public class Product {
     private final Nutrient potassium;
     private final Nutrient magnesium;
     private final Nutrient iron;
+
+    public record ProductId(@NonNull String value) {
+    }
 
 
 }

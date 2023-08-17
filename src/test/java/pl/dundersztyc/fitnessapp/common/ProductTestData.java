@@ -7,7 +7,7 @@ public class ProductTestData {
 
     public static Product.ProductBuilder defaultProduct() {
         return Product.builder()
-                .id("123456789")
+                .id(new Product.ProductId("123456789"))
                 .name("Nutella")
                 .kcal(500.0)
                 .fat(Nutrient.fromGrams(1.5))

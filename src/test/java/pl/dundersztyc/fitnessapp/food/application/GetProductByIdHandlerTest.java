@@ -12,7 +12,7 @@ class GetProductByIdHandlerTest {
 
     @Test
     void shouldGetProductById() {
-        Product product = Product.builder().id("12345").build();
+        Product product = Product.builder().id(new Product.ProductId("12345")).build();
 
         var fakeHandler = new GetProductByIdHandler() {
             @Override
