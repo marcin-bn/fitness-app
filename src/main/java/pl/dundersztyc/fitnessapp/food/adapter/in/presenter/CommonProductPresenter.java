@@ -6,16 +6,17 @@ class CommonProductPresenter implements ProductPresenter {
 
     @Override
     public ProductResponse prepareView(ProductResponse productResponse) {
-        productResponse.setVitaminA(null);
-        productResponse.setVitaminC(null);
-        productResponse.setVitaminD(null);
-        productResponse.setVitaminE(null);
-        productResponse.setVitaminK(null);
-        productResponse.setSodium(null);
-        productResponse.setCalcium(null);
-        productResponse.setPotassium(null);
-        productResponse.setMagnesium(null);
-        productResponse.setIron(null);
+        var nutritionFacts = productResponse.getNutritionFacts();
+        nutritionFacts.setVitaminA(null);
+        nutritionFacts.setVitaminC(null);
+        nutritionFacts.setVitaminD(null);
+        nutritionFacts.setVitaminE(null);
+        nutritionFacts.setVitaminK(null);
+        nutritionFacts.setSodium(null);
+        nutritionFacts.setCalcium(null);
+        nutritionFacts.setPotassium(null);
+        nutritionFacts.setMagnesium(null);
+        nutritionFacts.setIron(null);
         return productResponse;
     }
 }

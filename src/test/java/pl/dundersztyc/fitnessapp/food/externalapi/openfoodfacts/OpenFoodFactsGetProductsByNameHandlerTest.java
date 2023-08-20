@@ -29,10 +29,11 @@ class OpenFoodFactsGetProductsByNameHandlerTest extends AbstractIntegrationTest 
         assertThat(product).isNotNull();
         assertThat(product.getId()).isNotNull();
         // vitamin data + minerals missing
-        assertThat(product.getVitaminD()).isNull();
-        assertThat(product.getVitaminE()).isNull();
-        assertThat(product.getPotassium()).isNull();
-        assertThat(product.getMagnesium()).isNull();
+        var nutritionFacts = product.getNutritionFacts();
+        assertThat(nutritionFacts.getVitaminD()).isNull();
+        assertThat(nutritionFacts.getVitaminE()).isNull();
+        assertThat(nutritionFacts.getPotassium()).isNull();
+        assertThat(nutritionFacts.getMagnesium()).isNull();
     }
 
     @ParameterizedTest

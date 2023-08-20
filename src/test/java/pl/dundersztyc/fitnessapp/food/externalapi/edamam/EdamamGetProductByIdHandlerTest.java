@@ -36,10 +36,11 @@ class EdamamGetProductByIdHandlerTest extends AbstractIntegrationTest {
 
         assertThat(product.getId()).isNotNull();
         // vitamin data missing
-        assertThat(product.getVitaminA()).isNull();
-        assertThat(product.getVitaminC()).isNull();
-        assertThat(product.getVitaminD()).isNull();
-        assertThat(product.getVitaminE()).isNull();
+        var nutritionFacts = product.getNutritionFacts();
+        assertThat(nutritionFacts.getVitaminA()).isNull();
+        assertThat(nutritionFacts.getVitaminC()).isNull();
+        assertThat(nutritionFacts.getVitaminD()).isNull();
+        assertThat(nutritionFacts.getVitaminE()).isNull();
     }
 
     @ParameterizedTest

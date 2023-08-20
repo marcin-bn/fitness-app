@@ -42,4 +42,13 @@ class NutrientTest {
         assertThrows(ConstraintViolationException.class, () -> {Nutrient.fromGrams(-1);});
     }
 
+    @Test
+    void shouldMultiplyNutrient() {
+        Nutrient nutrient = Nutrient.fromGrams(100);
+
+        Nutrient afterMultiplication = nutrient.multiply(1.75);
+
+        assertThat(afterMultiplication.getGrams()).isEqualTo(175);
+    }
+
 }

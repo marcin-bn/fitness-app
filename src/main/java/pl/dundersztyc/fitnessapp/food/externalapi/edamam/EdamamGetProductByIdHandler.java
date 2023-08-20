@@ -18,12 +18,16 @@ import java.util.Optional;
 public class EdamamGetProductByIdHandler extends GetProductByIdHandler {
 
 
-    public EdamamGetProductByIdHandler(@Qualifier("edamam") ProductMapper productMapper, EdamamUrlProvider urlProvider) {
+    public EdamamGetProductByIdHandler(@Qualifier("edamam") ProductMapper productMapper,
+                                       @Qualifier("edamam") ProductNutritionFactsMapper nutritionFactsMapper,
+                                       EdamamUrlProvider urlProvider) {
         this.productMapper = productMapper;
+        this.nutritionFactsMapper = nutritionFactsMapper;
         this.urlProvider = urlProvider;
     }
 
     private final ProductMapper productMapper;
+    private final ProductNutritionFactsMapper nutritionFactsMapper;
     private final EdamamUrlProvider urlProvider;
 
     @Override
@@ -36,7 +40,8 @@ public class EdamamGetProductByIdHandler extends GetProductByIdHandler {
         if (productData.getTotalNutrients().isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(productMapper.mapToProduct(productId, productData));
+        var nutritionFacts = nutritionFactsMapper.mapToProductNutritionFacts(productData);
+        return Optional.of(productMapper.mapToProduct(productId, productData.getProductName(), nutritionFacts));
     }
 
     @Override

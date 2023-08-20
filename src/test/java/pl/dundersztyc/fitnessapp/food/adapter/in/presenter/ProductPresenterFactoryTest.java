@@ -27,11 +27,11 @@ class ProductPresenterFactoryTest {
 
     @Test
     void shouldGetCommonProductPresenterForLoggedRoles() {
-        var presenterForPremium = new ProductPresenterFactory().create(
+        var presenterForLogged = new ProductPresenterFactory().create(
                 List.of(new FakeAuthority("ROLE_USER_LOGGED"))
         );
 
-        assertThat(presenterForPremium instanceof CommonProductPresenter).isTrue();
+        assertThat(presenterForLogged instanceof CommonProductPresenter).isTrue();
     }
 
     @Test

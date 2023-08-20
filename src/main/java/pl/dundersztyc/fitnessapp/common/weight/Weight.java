@@ -24,6 +24,10 @@ public class Weight {
         return new Weight(weightInLbs * 0.4535);
     }
 
+    public static Weight fromGrams(double weightInGrams) {
+        return new Weight(weightInGrams / 1000);
+    }
+
     public double getKg() {
         return BigDecimal.valueOf(
                 weightInKg
@@ -33,6 +37,12 @@ public class Weight {
     public double getLbs() {
         return BigDecimal.valueOf(
                 weightInKg / 0.4535
+        ).setScale(2, RoundingMode.HALF_UP).doubleValue();
+    }
+
+    public double getGrams() {
+        return BigDecimal.valueOf(
+                weightInKg * 1000
         ).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 

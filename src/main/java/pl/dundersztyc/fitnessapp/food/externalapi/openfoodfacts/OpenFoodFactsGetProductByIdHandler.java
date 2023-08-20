@@ -13,12 +13,16 @@ import java.util.Optional;
 @Component
 public class OpenFoodFactsGetProductByIdHandler extends GetProductByIdHandler {
 
-    public OpenFoodFactsGetProductByIdHandler(@Qualifier("openfoodfacts") ProductMapper productMapper, OpenFoodFactsUrlProvider urlProvider) {
+    public OpenFoodFactsGetProductByIdHandler(@Qualifier("openfoodfacts") ProductMapper productMapper,
+                                              @Qualifier("openfoodfacts") ProductNutritionFactsMapper nutritionFactsMapper,
+                                              OpenFoodFactsUrlProvider urlProvider) {
         this.productMapper = productMapper;
+        this.nutritionFactsMapper = nutritionFactsMapper;
         this.urlProvider = urlProvider;
     }
 
     private final ProductMapper productMapper;
+    private final ProductNutritionFactsMapper nutritionFactsMapper;
     private final OpenFoodFactsUrlProvider urlProvider;
 
 
@@ -37,7 +41,8 @@ public class OpenFoodFactsGetProductByIdHandler extends GetProductByIdHandler {
             return Optional.empty();
         }
 
-        Product product = productMapper.mapToProduct(productId, productData);
+        var nutritionFacts = nutritionFactsMapper.mapToProductNutritionFacts(productData);
+        Product product = productMapper.mapToProduct(productId, productData.getProductName(), nutritionFacts);
         return Optional.of(product);
     }
 

@@ -30,7 +30,7 @@ class GetProductByBarcodeTest extends AbstractIntegrationTest {
         JsonNode productResponse = new ObjectMapper().readTree(getProductResult.getResponse().getContentAsString());
 
         assertThat(productResponse).isNotNull();
-        assertThat(productResponse.path("sodium").isNull()).isTrue();
+        assertThat(productResponse.path("nutritionFacts").path("sodium").isNull()).isTrue();
     }
 
     @Test
@@ -48,7 +48,7 @@ class GetProductByBarcodeTest extends AbstractIntegrationTest {
         JsonNode productResponse = new ObjectMapper().readTree(getProductResult.getResponse().getContentAsString());
 
         assertThat(productResponse).isNotNull();
-        assertThat(productResponse.at("/sodium/value/unit").asText()).isEqualTo("mg");
+        assertThat(productResponse.path("nutritionFacts").at("/sodium/value/unit").asText()).isEqualTo("mg");
     }
 
     @Test

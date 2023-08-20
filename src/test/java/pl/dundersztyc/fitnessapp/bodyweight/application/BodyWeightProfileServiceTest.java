@@ -32,8 +32,6 @@ class BodyWeightProfileServiceTest {
         BodyWeightMeasurementRequest measurementRequest = new BodyWeightMeasurementRequest(1L, BigDecimal.valueOf(85.57));
         User.UserId userId = new User.UserId(1L);
 
-        givenProfileWithId(userId);
-
         profileService.addMeasurement(measurementRequest);
 
         thenMeasurementHasBeenAdded(measurementRequest);

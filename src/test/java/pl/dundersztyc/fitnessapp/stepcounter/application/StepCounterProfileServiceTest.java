@@ -32,8 +32,6 @@ class StepCounterProfileServiceTest {
         StepMeasurementRequest measurementRequest = new StepMeasurementRequest(1L, 8000L, StepMeasurementType.DAILY_ACTIVITY, LocalDateTime.now());
         User.UserId userId = new User.UserId(1L);
 
-        givenProfileWithId(userId);
-
         profileService.addMeasurement(measurementRequest);
 
         thenMeasurementHasBeenAdded(measurementRequest);

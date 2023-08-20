@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 public class ProductListScraper {
 
     public List<String> getProductIds(String searchTerm, int numberOfIds) throws IOException {
-        String URL = "https://pl.openfoodfacts.org/cgi/search.pl?search_terms=" + searchTerm + "&search_simple=1&action=process";
-        Document doc = Jsoup.connect(URL).get();
+        String URL = "https://world.openfoodfacts.org/cgi/search.pl?search_terms=" + searchTerm + "&search_simple=1&action=process";
+        Document doc = Jsoup.connect(URL).timeout(50000).get();
         var products = doc.select(".products > li");
         return products.stream()
                 .map(this::extractHrefFromProduct)

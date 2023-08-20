@@ -38,4 +38,8 @@ public class Nutrient {
         return milligrams * 1000;
     }
 
+    public Nutrient multiply(double weightMultiplier) {
+        return Nutrient.fromMilligrams(milligrams * weightMultiplier);
+    }
+
 }

@@ -31,7 +31,7 @@ class GetProductByIdTest extends AbstractIntegrationTest {
 
         assertThat(productResponse).isNotNull();
         assertThat(productResponse.path("id").asText()).isEqualTo(id);
-        assertThat(productResponse.path("sodium").isNull()).isTrue();
+        assertThat(productResponse.path("nutritionFacts").path("sodium").isNull()).isTrue();
     }
 
     @Test
@@ -50,7 +50,7 @@ class GetProductByIdTest extends AbstractIntegrationTest {
 
         assertThat(productResponse).isNotNull();
         assertThat(productResponse.path("id").asText()).isEqualTo(id);
-        assertThat(productResponse.at("/sodium/value/unit").asText()).isEqualTo("mg");
+        assertThat(productResponse.path("nutritionFacts").at("/sodium/value/unit").asText()).isEqualTo("mg");
     }
 
     @Test
