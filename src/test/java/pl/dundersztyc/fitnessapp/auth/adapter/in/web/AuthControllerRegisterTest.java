@@ -19,7 +19,7 @@ public class AuthControllerRegisterTest extends AbstractIntegrationTest {
 
 
     @Autowired
-    SaveUserPort saveUserPort;
+    private SaveUserPort saveUserPort;
 
     private static final String REGISTER_URL = "/api/v1/public/register";
 

@@ -70,9 +70,9 @@ class UserPersistenceAdapterTest extends AbstractTestcontainers {
                 .firstName("Tomasz")
                 .build();
 
-        boolean result = persistenceAdapter.save(user);
+        User.UserId userId = persistenceAdapter.save(user);
 
-        assertThat(result).isTrue();
+        assertThat(userId).isNotNull();
         assertThat(userRepository.count()).isEqualTo(1);
 
         UserJpaEntity savedEntity = userRepository.findByUsername(user.getUsername()).orElseThrow(EntityNotFoundException::new);
@@ -85,11 +85,11 @@ class UserPersistenceAdapterTest extends AbstractTestcontainers {
     void saveWithSameUserTwiceIsIncorrect() {
         User user = defaultUser().build();
 
-        boolean firstSave = persistenceAdapter.save(user);
-        boolean secondSave = persistenceAdapter.save(user);
+        User.UserId firstSave = persistenceAdapter.save(user);
+        User.UserId secondSave = persistenceAdapter.save(user);
 
-        assertThat(firstSave).isTrue();
-        assertThat(secondSave).isFalse();
+        assertThat(firstSave).isNotNull();
+        assertThat(secondSave).isNull();
     }
 
 

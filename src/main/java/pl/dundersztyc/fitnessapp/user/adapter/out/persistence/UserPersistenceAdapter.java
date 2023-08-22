@@ -31,11 +31,11 @@ class UserPersistenceAdapter implements LoadUserPort, SaveUserPort {
     }
 
     @Override
-    public boolean save(User user) {
-        if (loginCredentialsExists(user.getUsername(), user.getEmail())) return false;
+    public UserId save(User user) {
+        if (loginCredentialsExists(user.getUsername(), user.getEmail())) return null;
         UserJpaEntity userEntity = userMapper.mapToJpaEntity(user);
-        userRepository.save(userEntity);
-        return true;
+        var userJpa = userRepository.save(userEntity);
+        return new UserId(userJpa.getId());
     }
 
     private boolean loginCredentialsExists(String username, String email) {

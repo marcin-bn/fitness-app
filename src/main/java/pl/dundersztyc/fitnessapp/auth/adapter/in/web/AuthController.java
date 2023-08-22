@@ -42,9 +42,10 @@ class AuthController {
     }
 
     @PostMapping("register")
-    public ResponseEntity<?> register(@RequestBody @Valid User request) {
-        boolean isSaved = registerUserUseCase.register(request);
-        return isSaved ? ResponseEntity.status(HttpStatus.CREATED).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    public ResponseEntity<User.UserId> register(@RequestBody @Valid User request) {
+        User.UserId userId = registerUserUseCase.register(request);
+        return userId != null ? ResponseEntity.status(HttpStatus.CREATED).body(userId)
+                : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
 

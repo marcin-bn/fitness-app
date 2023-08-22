@@ -35,7 +35,7 @@ public class AuthService implements RegisterUserUseCase, AuthenticationUseCase, 
     private final JwtEncoder jwtEncoder;
 
     @Override
-    public boolean register(User user) {
+    public User.UserId register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return saveUserPort.save(user);
     }
