@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.dundersztyc.fitnessapp.user.domain.Gender;
 
 import java.util.Set;
 
@@ -29,6 +30,9 @@ class UserJpaEntity {
     private String username;
 
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "authority", joinColumns = @JoinColumn(name = "id"))

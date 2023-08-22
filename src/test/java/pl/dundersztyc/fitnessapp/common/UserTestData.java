@@ -1,5 +1,6 @@
 package pl.dundersztyc.fitnessapp.common;
 
+import pl.dundersztyc.fitnessapp.user.domain.Gender;
 import pl.dundersztyc.fitnessapp.user.domain.Role;
 import pl.dundersztyc.fitnessapp.user.domain.User;
 import pl.dundersztyc.fitnessapp.user.domain.User.UserBuilder;
@@ -17,6 +18,7 @@ public class UserTestData {
                 .email("jankowalski@gmail.com")
                 .username("jan123")
                 .password("password1")
+                .gender(Gender.MAN)
                 .authorities(Set.of(new Role(Role.USER_LOGGED)));
     }
 }

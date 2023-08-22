@@ -33,6 +33,10 @@ public class User implements UserDetails {
     @NonNull
     private String password;
 
+    @Getter
+    @NonNull
+    private Gender gender;
+
     @NonNull
     private Set<Role> authorities;
 
@@ -43,8 +47,9 @@ public class User implements UserDetails {
             String email,
             String username,
             String password,
+            Gender gender,
             Set<Role> authorities) {
-        return new User(id, firstName, lastName, email, username, password, authorities);
+        return new User(id, firstName, lastName, email, username, password, gender, authorities);
     }
 
     public static User withoutId(
@@ -53,8 +58,9 @@ public class User implements UserDetails {
             String email,
             String username,
             String password,
+            Gender gender,
             Set<Role> authorities) {
-        return new User(null, firstName, lastName, email, username, password, authorities);
+        return new User(null, firstName, lastName, email, username, password, gender, authorities);
     }
 
 

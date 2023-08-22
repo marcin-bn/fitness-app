@@ -1,7 +1,6 @@
 package pl.dundersztyc.fitnessapp.user.adapter.out.persistence;
 
 import org.springframework.stereotype.Component;
-import pl.dundersztyc.fitnessapp.user.adapter.out.persistence.UserJpaEntity;
 import pl.dundersztyc.fitnessapp.user.domain.Role;
 import pl.dundersztyc.fitnessapp.user.domain.User;
 
@@ -24,6 +23,7 @@ class UserMapper {
                 userJpaEntity.getEmail(),
                 userJpaEntity.getUsername(),
                 userJpaEntity.getPassword(),
+                userJpaEntity.getGender(),
                 authorities
         );
     }
@@ -37,6 +37,7 @@ class UserMapper {
                 .email(user.getEmail())
                 .username(user.getUsername())
                 .password(user.getPassword())
+                .gender(user.getGender())
                 .authorities(
                         user.getAuthorities().stream()
                                 .map(Role::getAuthority)
