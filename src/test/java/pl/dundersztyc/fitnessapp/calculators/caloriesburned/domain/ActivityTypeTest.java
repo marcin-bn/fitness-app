@@ -20,7 +20,7 @@ class ActivityTypeTest {
     }
 
     @ParameterizedTest
-    @ValueSource(longs = {0, -1})
+    @ValueSource(longs = {-1})
     void shouldThrowWhenCalculateCaloriesBurnedWithInvalidMinutes(long minutes) {
         assertThrows(IllegalArgumentException.class, () -> {
            ActivityType.SOCCER.calculateCaloriesBurned(minutes, Weight.fromKg(70));
@@ -31,7 +31,8 @@ class ActivityTypeTest {
         return Stream.of(
                 Arguments.of(ActivityType.BADMINTON, 30, Weight.fromKg(70), 158),
                 Arguments.of(ActivityType.SWIMMING, 60, Weight.fromKg(50), 352),
-                Arguments.of(ActivityType.BASKETBALL, 120, Weight.fromKg(105), 1266)
+                Arguments.of(ActivityType.BASKETBALL, 120, Weight.fromKg(105), 1266),
+                Arguments.of(ActivityType.BASKETBALL, 0, Weight.fromKg(105), 0)
         );
     }
 

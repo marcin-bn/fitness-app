@@ -35,9 +35,10 @@ public enum ActivityType {
     }
 
     public long calculateCaloriesBurned(long minutes, Weight weight) {
-        if (minutes <= 0) {
-            throw new IllegalArgumentException("minutes cannot be less than or equal to 0");
+        if (minutes < 0) {
+            throw new IllegalArgumentException("minutes cannot be less than 0");
         }
+        if (minutes == 0) return 0;
         return (long) (((double) minutes / 60) * (weight.getKg() / averageWeight.getKg()) * caloriesBurnedPerHour);
     }
 }
