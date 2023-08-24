@@ -13,7 +13,7 @@ import pl.dundersztyc.fitnessapp.common.weight.Weight;
 @RestController
 @RequestMapping("api/v1/calculators/caloric-needs")
 @RequiredArgsConstructor
-public class CaloricNeedsController {
+class CaloricNeedsController {
 
     private final CalculateCaloricNeedsUseCase calculateCaloricNeedsUseCase;
 

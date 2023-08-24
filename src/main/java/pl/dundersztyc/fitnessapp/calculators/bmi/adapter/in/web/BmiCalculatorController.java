@@ -14,7 +14,7 @@ import pl.dundersztyc.fitnessapp.common.weight.Weight;
 @RestController
 @RequestMapping("api/v1/calculators/bmi")
 @RequiredArgsConstructor
-public class BmiCalculatorController {
+class BmiCalculatorController {
 
     private final CalculateBmiUseCase calculateBmiUseCase;
     private final DetermineBmiCategoryUseCase determineBmiCategoryUseCase;

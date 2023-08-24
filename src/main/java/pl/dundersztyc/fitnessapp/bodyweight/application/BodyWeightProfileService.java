@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class BodyWeightProfileService implements AddBodyWeightMeasurementUseCase, CalculateBodyWeightProgressUseCase, LoadBodyWeightMeasurementsUseCase {
+class BodyWeightProfileService implements AddBodyWeightMeasurementUseCase, CalculateBodyWeightProgressUseCase, LoadBodyWeightMeasurementsUseCase {
 
     private final LoadBodyWeightProfilePort loadBodyWeightProfilePort;
     private final UpdateBodyWeightProfilePort updateProfilePort;

@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class MealPlanService implements
+class MealPlanService implements
         GetMealPlanUseCase, GetNutrientsOfMealPlanUseCase, DeleteMealUseCase, AddMealUseCase, UpdateMealUseCase {
 
     private final LoadMealPlanProfilePort loadMealPlanProfilePort;

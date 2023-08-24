@@ -11,7 +11,7 @@ import java.util.function.Function;
 
 @Component("edamam-pnf-mapper")
 @Qualifier("edamam")
-public class ProductNutritionFactsMapper {
+class ProductNutritionFactsMapper {
 
     public ProductNutritionFacts mapToProductNutritionFacts(ProductData productData) {
         final var nutrients = productData.getTotalNutrients();

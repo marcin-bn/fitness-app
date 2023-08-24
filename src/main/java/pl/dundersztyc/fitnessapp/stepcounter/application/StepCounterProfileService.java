@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class StepCounterProfileService implements AddStepMeasurementUseCase, LoadStepMeasurementsUseCase, CalculateStepCounterProfileStatsUseCase {
+class StepCounterProfileService implements AddStepMeasurementUseCase, LoadStepMeasurementsUseCase, CalculateStepCounterProfileStatsUseCase {
 
     private final LoadStepCounterProfilePort loadStepCounterProfilePort;
     private final UpdateStepCounterProfilePort updateStepCounterProfilePort;

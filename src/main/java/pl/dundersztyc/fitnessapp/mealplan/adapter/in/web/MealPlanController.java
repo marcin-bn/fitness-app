@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("api/v1/meal-plan/")
 @RequiredArgsConstructor
-public class MealPlanController {
+class MealPlanController {
 
     private final AddMealUseCase addMealUseCase;
     private final UpdateMealUseCase updateMealUseCase;

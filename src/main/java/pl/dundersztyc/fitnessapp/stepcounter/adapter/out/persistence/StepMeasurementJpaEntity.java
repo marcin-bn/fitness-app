@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class StepMeasurementJpaEntity {
+class StepMeasurementJpaEntity {
 
     @Id
     @GeneratedValue

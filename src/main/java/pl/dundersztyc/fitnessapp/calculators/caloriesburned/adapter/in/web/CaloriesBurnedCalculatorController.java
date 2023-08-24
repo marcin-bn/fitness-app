@@ -12,7 +12,7 @@ import pl.dundersztyc.fitnessapp.common.weight.Weight;
 @RestController
 @RequestMapping("api/v1/calculators/calories-burned")
 @RequiredArgsConstructor
-public class CaloriesBurnedCalculatorController {
+class CaloriesBurnedCalculatorController {
 
     private final CalculateCaloriesBurnedUseCase calculateCaloriesBurnedUseCase;
 

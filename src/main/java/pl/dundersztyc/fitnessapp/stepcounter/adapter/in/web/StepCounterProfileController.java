@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("api/v1/step-counter/")
 @RequiredArgsConstructor
-public class StepCounterProfileController {
+class StepCounterProfileController {
 
     private final AddStepMeasurementUseCase addStepMeasurementUseCase;
     private final CalculateStepCounterProfileStatsUseCase calculateStepCounterProfileStatsUseCase;

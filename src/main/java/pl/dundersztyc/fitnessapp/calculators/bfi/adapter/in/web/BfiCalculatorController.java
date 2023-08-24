@@ -12,7 +12,7 @@ import pl.dundersztyc.fitnessapp.user.domain.Gender;
 @RestController
 @RequestMapping("api/v1/calculators/bfi")
 @RequiredArgsConstructor
-public class BfiCalculatorController {
+class BfiCalculatorController {
 
     private final CalculateBfiUseCase calculateBfiUseCase;
     private final DetermineBfiCategoryUseCase determineBfiCategoryUseCase;

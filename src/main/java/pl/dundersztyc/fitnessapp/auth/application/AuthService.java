@@ -5,7 +5,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,10 +12,10 @@ import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
+import pl.dundersztyc.fitnessapp.auth.application.port.in.AuthRequest;
 import pl.dundersztyc.fitnessapp.auth.application.port.in.AuthenticationUseCase;
 import pl.dundersztyc.fitnessapp.auth.application.port.in.ProvideJwtUseCase;
 import pl.dundersztyc.fitnessapp.auth.application.port.in.RegisterUserUseCase;
-import pl.dundersztyc.fitnessapp.auth.application.port.in.AuthRequest;
 import pl.dundersztyc.fitnessapp.user.application.port.out.SaveUserPort;
 import pl.dundersztyc.fitnessapp.user.domain.User;
 
@@ -27,7 +26,7 @@ import static java.util.stream.Collectors.joining;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService implements RegisterUserUseCase, AuthenticationUseCase, ProvideJwtUseCase {
+class AuthService implements RegisterUserUseCase, AuthenticationUseCase, ProvideJwtUseCase {
 
     private final PasswordEncoder passwordEncoder;
     private final SaveUserPort saveUserPort;
@@ -41,13 +40,13 @@ public class AuthService implements RegisterUserUseCase, AuthenticationUseCase, 
     }
 
     @Override
-    public Authentication authenticate(AuthRequest authRequest) throws AuthenticationException {
+    public Authentication authenticate(AuthRequest authRequest) {
         return authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password()));
     }
 
     @Override
-    public String provideJwt(Authentication authentication) throws BadCredentialsException {
+    public String provideJwt(Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new BadCredentialsException("invalid credentials");
         }

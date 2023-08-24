@@ -6,7 +6,7 @@ import pl.dundersztyc.fitnessapp.calculators.caloriesburned.domain.ActivityType;
 import pl.dundersztyc.fitnessapp.common.weight.Weight;
 
 @Service
-public class CaloriesBurnedCalculatorService implements CalculateCaloriesBurnedUseCase {
+class CaloriesBurnedCalculatorService implements CalculateCaloriesBurnedUseCase {
 
     @Override
     public long calculateCaloriesBurned(ActivityType activityType, long minutes, Weight weight) {

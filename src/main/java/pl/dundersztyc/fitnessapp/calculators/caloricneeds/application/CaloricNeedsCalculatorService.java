@@ -10,7 +10,7 @@ import pl.dundersztyc.fitnessapp.common.weight.Weight;
 import pl.dundersztyc.fitnessapp.user.domain.Gender;
 
 @Service
-public class CaloricNeedsCalculatorService implements CalculateCaloricNeedsUseCase {
+class CaloricNeedsCalculatorService implements CalculateCaloricNeedsUseCase {
 
     @Override
     public long calculateCaloricNeeds(long age, Gender gender, Height height, Weight weight, ActivityFrequency frequency, BodyWeightGoal weightGoal) {
