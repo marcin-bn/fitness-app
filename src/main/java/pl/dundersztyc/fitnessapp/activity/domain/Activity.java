@@ -1,5 +1,6 @@
 package pl.dundersztyc.fitnessapp.activity.domain;
 
+import lombok.Getter;
 import lombok.NonNull;
 import pl.dundersztyc.fitnessapp.calculators.caloriesburned.domain.ActivityType;
 import pl.dundersztyc.fitnessapp.common.speed.Speed;
@@ -8,11 +9,12 @@ import pl.dundersztyc.fitnessapp.elevation.application.port.in.GetAltitudeUseCas
 import pl.dundersztyc.fitnessapp.user.domain.User;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-
+@Getter
 public class Activity {
 
     private ActivityId activityId;
@@ -39,7 +41,11 @@ public class Activity {
         this.activityType = activityType;
         this.weight = weight;
         this.activityRecords = activityRecords;
+
         activityRecords.removeAll(Collections.singleton(null));
+        if (activityRecords.isEmpty()) {
+            throw new IllegalArgumentException("activity records cannot be empty");
+        }
     }
 
     public static Activity withId(
@@ -62,6 +68,10 @@ public class Activity {
     }
 
     public record ActivityId(@NonNull Long value) {
+    }
+
+    public LocalDateTime getStartDate() {
+        return activityRecords.get(0).timestamp();
     }
 
     public Duration calculateDuration() {

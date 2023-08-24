@@ -13,15 +13,15 @@ class ActivityRecordTest {
     @Test
     void shouldThrowWhenCreateWithHeartRateSmallerThanOrEqualToZero() {
         assertThrows(ConstraintViolationException.class,
-                () -> new ActivityRecord(new Coordinates(1, 2), 0L, LocalDateTime.now()));
+                () -> ActivityRecord.withoutId(new Coordinates(1, 2), 0L, LocalDateTime.now()));
         assertThrows(ConstraintViolationException.class,
-                () -> new ActivityRecord(new Coordinates(1, 2), -1L, LocalDateTime.now()));
+                () -> ActivityRecord.withoutId(new Coordinates(1, 2), -1L, LocalDateTime.now()));
     }
 
     @Test
     void shouldThrowWhenCreateWithNullTimestamp() {
         assertThrows(ConstraintViolationException.class,
-                () -> new ActivityRecord(new Coordinates(1, 2), 100L, null));
+                () -> ActivityRecord.withoutId(new Coordinates(1, 2), 100L, null));
     }
 
 }

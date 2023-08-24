@@ -9,16 +9,25 @@ import java.time.LocalDateTime;
 import static pl.dundersztyc.fitnessapp.common.validation.Validation.validate;
 
 public record ActivityRecord(
-    Coordinates coordinates,
-    @Positive Long heartRate,
-    @NotNull LocalDateTime timestamp) {
+        Long id,
+        Coordinates coordinates,
+        @Positive Long heartRate,
+        @NotNull LocalDateTime timestamp) {
 
-    public ActivityRecord(Coordinates coordinates,
+    public ActivityRecord(Long id,
+                          Coordinates coordinates,
                           Long heartRate,
                           LocalDateTime timestamp) {
+        this.id = id;
         this.coordinates = coordinates;
         this.heartRate = heartRate;
         this.timestamp = timestamp;
         validate(this);
+    }
+
+    public static ActivityRecord withoutId(Coordinates coordinates,
+                                        Long heartRate,
+                                        LocalDateTime timestamp) {
+        return new ActivityRecord(null, coordinates, heartRate, timestamp);
     }
 }

@@ -14,13 +14,28 @@ import static pl.dundersztyc.fitnessapp.common.ActivityTestData.activityWithReco
 class ActivityTest {
 
     @Test
+    void shouldGetStartDate() {
+        var startTime = LocalDateTime.of(2020, 1, 1, 1, 1);
+        var finishTime = startTime.plusHours(1);
+
+        var activity = activityWithRecords(
+                ActivityRecord.withoutId(null, null, startTime),
+                ActivityRecord.withoutId(null, null, finishTime)
+        );
+
+        var startDate = activity.getStartDate();
+
+        assertThat(startDate).isEqualTo(startTime);
+    }
+
+    @Test
     void shouldCalculateDuration() {
         var startTime = LocalDateTime.of(2020, 1, 1, 1, 1);
         var finishTime = startTime.plusHours(1);
 
         var activity = activityWithRecords(
-                new ActivityRecord(null, null, startTime),
-                new ActivityRecord(null, null, finishTime)
+                ActivityRecord.withoutId(null, null, startTime),
+                ActivityRecord.withoutId(null, null, finishTime)
         );
 
         var duration = activity.calculateDuration();
@@ -31,7 +46,7 @@ class ActivityTest {
     @Test
     void shouldReturnDurationZeroWhenCalculateDurationWithTooFewRecords() {
         var activity = activityWithRecords(
-                new ActivityRecord(null, null, LocalDateTime.now())
+                ActivityRecord.withoutId(null, null, LocalDateTime.now())
         );
 
         var duration = activity.calculateDuration();
@@ -45,8 +60,8 @@ class ActivityTest {
         var finishTime = startTime.plusHours(1);
 
         var activity = activityWithRecords(
-                new ActivityRecord(null, null, startTime),
-                new ActivityRecord(null, null, finishTime)
+                ActivityRecord.withoutId(null, null, startTime),
+                ActivityRecord.withoutId(null, null, finishTime)
         );
 
         var caloriesBurned = activity.calculateCaloriesBurned();
@@ -57,7 +72,7 @@ class ActivityTest {
     @Test
     void shouldCalculateCaloriesBurnedWhenDurationIsZero() {
         var activity = activityWithRecords(
-                new ActivityRecord(null, null, LocalDateTime.now())
+                ActivityRecord.withoutId(null, null, LocalDateTime.now())
         );
 
         var caloriesBurned = activity.calculateCaloriesBurned();
@@ -68,11 +83,11 @@ class ActivityTest {
     @Test
     void shouldCalculateAverageHeartRate() {
         var activity = activityWithRecords(
-                new ActivityRecord(null, 100L, LocalDateTime.now()),
-                new ActivityRecord(null, null, LocalDateTime.now()),
-                new ActivityRecord(null, 150L, LocalDateTime.now()),
-                new ActivityRecord(null, null, LocalDateTime.now()),
-                new ActivityRecord(null, 200L, LocalDateTime.now())
+                ActivityRecord.withoutId(null, 100L, LocalDateTime.now()),
+                ActivityRecord.withoutId(null, null, LocalDateTime.now()),
+                ActivityRecord.withoutId(null, 150L, LocalDateTime.now()),
+                ActivityRecord.withoutId(null, null, LocalDateTime.now()),
+                ActivityRecord.withoutId(null, 200L, LocalDateTime.now())
         );
 
         var averageHeartRate = activity.calculateAverageHeartRate();
@@ -83,7 +98,7 @@ class ActivityTest {
     @Test
     void shouldThrowWhenCalculateAverageHeartRateAndNoDataIsProvided() {
         var activity = activityWithRecords(
-                new ActivityRecord(null, null, LocalDateTime.now())
+                ActivityRecord.withoutId(null, null, LocalDateTime.now())
         );
 
         assertThrows(IllegalStateException.class,
@@ -99,9 +114,9 @@ class ActivityTest {
         var c3 = new Coordinates(30, 41); // altitude: 610
 
         var activity = activityWithRecords(
-                new ActivityRecord(c1, null, LocalDateTime.now()),
-                new ActivityRecord(c2, null, LocalDateTime.now()),
-                new ActivityRecord(c3, null, LocalDateTime.now())
+                ActivityRecord.withoutId(c1, null, LocalDateTime.now()),
+                ActivityRecord.withoutId(c2, null, LocalDateTime.now()),
+                ActivityRecord.withoutId(c3, null, LocalDateTime.now())
         );
 
         var averageAltitude = activity.calculateAverageAltitude(getAltitudeUseCase);
@@ -113,7 +128,7 @@ class ActivityTest {
     void shouldThrowWhenCalculateAverageAltitudeAndCoordinatesAreNotProvided() {
         var getAltitudeUseCase = new ElevationService();
         var activity = activityWithRecords(
-                new ActivityRecord(null, null, LocalDateTime.now())
+                ActivityRecord.withoutId(null, null, LocalDateTime.now())
         );
 
         assertThrows(IllegalStateException.class,
@@ -129,13 +144,13 @@ class ActivityTest {
 
 
         var activity = activityWithRecords(
-                new ActivityRecord(c1, null, LocalDateTime.now()),
-                new ActivityRecord(c2, null, LocalDateTime.now()),
-                new ActivityRecord(null, null, LocalDateTime.now()),
+                ActivityRecord.withoutId(c1, null, LocalDateTime.now()),
+                ActivityRecord.withoutId(c2, null, LocalDateTime.now()),
+                ActivityRecord.withoutId(null, null, LocalDateTime.now()),
 
-                new ActivityRecord(c1, null, LocalDateTime.now()),
-                new ActivityRecord(c2, null, LocalDateTime.now()),
-                new ActivityRecord(null, null, LocalDateTime.now())
+                ActivityRecord.withoutId(c1, null, LocalDateTime.now()),
+                ActivityRecord.withoutId(c2, null, LocalDateTime.now()),
+                ActivityRecord.withoutId(null, null, LocalDateTime.now())
         );
 
         var distanceInMeters = activity.calculateDistanceInMeters();
@@ -147,8 +162,8 @@ class ActivityTest {
     void shouldCalculateDistanceInMetersWhenCoordinatesAreNotProvided() {
 
         var activity = activityWithRecords(
-                new ActivityRecord(null, null, LocalDateTime.now()),
-                new ActivityRecord(null, null, LocalDateTime.now())
+                ActivityRecord.withoutId(null, null, LocalDateTime.now()),
+                ActivityRecord.withoutId(null, null, LocalDateTime.now())
         );
 
         var distanceInMeters = activity.calculateDistanceInMeters();
@@ -166,8 +181,8 @@ class ActivityTest {
         var finishTime = startTime.plusHours(1);
 
         var activity = activityWithRecords(
-                new ActivityRecord(c1, null, startTime),
-                new ActivityRecord(c2, null, finishTime)
+                ActivityRecord.withoutId(c1, null, startTime),
+                ActivityRecord.withoutId(c2, null, finishTime)
         );
 
         var averageSpeed = activity.getAverageSpeed();
@@ -180,8 +195,8 @@ class ActivityTest {
         var time = LocalDateTime.of(2020, 1, 1, 1, 1);
 
         var activity = activityWithRecords(
-                new ActivityRecord(new Coordinates(1, 1), null, time),
-                new ActivityRecord(new Coordinates(1, 1.01), null, time)
+                ActivityRecord.withoutId(new Coordinates(1, 1), null, time),
+                ActivityRecord.withoutId(new Coordinates(1, 1.01), null, time)
         );
 
         var averageSpeed = activity.getAverageSpeed();
