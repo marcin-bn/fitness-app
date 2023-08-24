@@ -23,7 +23,7 @@ jobs:
         image: postgres:latest
 
         ports:
-          - 5433:5432/tcp
+          - 5432
 
     steps:
       - uses: actions/checkout@v3
