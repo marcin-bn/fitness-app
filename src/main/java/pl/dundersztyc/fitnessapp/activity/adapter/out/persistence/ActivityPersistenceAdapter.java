@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class ActivityPersistenceAdapter implements SaveActivityPort, LoadActivitiesPort {
+class ActivityPersistenceAdapter implements SaveActivityPort, LoadActivitiesPort {
 
     private final ActivityRepository activityRepository;
     private final ActivityRecordRepository activityRecordRepository;

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ActivityRecordJpaEntity {
+class ActivityRecordJpaEntity {
 
     @Id
     @GeneratedValue
