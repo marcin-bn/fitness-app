@@ -43,12 +43,10 @@ class BodyWeightProfileServiceTest {
 
         LocalDateTime startDate = LocalDateTime.of(2020, 1, 1, 1, 1);
         LocalDateTime endDate = startDate.plusWeeks(1);
-        BigDecimal startWeight = BigDecimal.valueOf(90.50);
-        BigDecimal endWeight = BigDecimal.valueOf(85.25);
 
         List<BodyWeightMeasurement> measurements = List.of(
-                defaultBodyWeightMeasurement().timestamp(startDate).weight(startWeight).build(),
-                defaultBodyWeightMeasurement().timestamp(endDate).weight(endWeight).build()
+                defaultBodyWeightMeasurement().timestamp(startDate).weight(BigDecimal.valueOf(90.50)).build(),
+                defaultBodyWeightMeasurement().timestamp(endDate).weight(BigDecimal.valueOf(85.25)).build()
         );
 
         givenProfileWithMeasurements(measurements);

@@ -11,8 +11,7 @@ public class BodyWeightProgressTest {
     @Test
     void shouldThrowWhenCreateProgressWithNegativeWeeks() {
         final long WEEKS = -1L;
-        assertThrows(IllegalArgumentException.class, () -> {
-            var progress = new BodyWeightProgress(BigDecimal.valueOf(10L), WEEKS);
-        });
+        assertThrows(IllegalArgumentException.class,
+                () -> new BodyWeightProgress(BigDecimal.valueOf(10L), WEEKS));
     }
 }

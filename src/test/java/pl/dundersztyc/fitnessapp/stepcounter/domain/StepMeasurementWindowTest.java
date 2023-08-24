@@ -23,7 +23,9 @@ public class StepMeasurementWindowTest {
                 defaultStepMeasurement().timestamp(endDate()).build()
         );
 
-        assertThat(measurementWindow.getStartTimestamp()).isEqualTo(startDate());
+        var startTimestamp = measurementWindow.getStartTimestamp();
+
+        assertThat(startTimestamp).isEqualTo(startDate());
     }
 
     @Test
@@ -34,7 +36,9 @@ public class StepMeasurementWindowTest {
                 defaultStepMeasurement().timestamp(endDate()).build()
         );
 
-        assertThat(measurementWindow.getEndTimestamp()).isEqualTo(endDate());
+        var endTimestamp = measurementWindow.getEndTimestamp();
+
+        assertThat(endTimestamp).isEqualTo(endDate());
     }
 
     @Test
@@ -45,7 +49,9 @@ public class StepMeasurementWindowTest {
                 defaultStepMeasurement().steps(8000L).build()
         );
 
-        assertThat(measurementWindow.getMinSteps()).isEqualTo(8000L);
+        var minSteps = measurementWindow.getMinSteps();
+
+        assertThat(minSteps).isEqualTo(8000L);
     }
 
     @Test
@@ -56,7 +62,9 @@ public class StepMeasurementWindowTest {
                 defaultStepMeasurement().steps(8000L).build()
         );
 
-        assertThat(measurementWindow.getMaxSteps()).isEqualTo(10000L);
+        var maxSteps = measurementWindow.getMaxSteps();
+
+        assertThat(maxSteps).isEqualTo(10000L);
     }
 
     @ParameterizedTest

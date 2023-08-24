@@ -16,9 +16,9 @@ class MealPlanWindowTest {
         window.addMeal(defaultMeal().day(LocalDate.of(2020, 1, 1)).build());
         window.addMeal(defaultMeal().day(LocalDate.of(2010, 8, 9)).build());
 
-        assertThat(
-                window.findMealsFromDay(LocalDate.of(2020, 1, 1))
-        ).hasSize(2);
+        var mealsFromDay = window.findMealsFromDay(LocalDate.of(2020, 1, 1));
+
+        assertThat(mealsFromDay).hasSize(2);
     }
 
 }

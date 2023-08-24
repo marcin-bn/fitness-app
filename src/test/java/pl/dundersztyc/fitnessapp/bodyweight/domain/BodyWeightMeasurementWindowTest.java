@@ -22,7 +22,9 @@ class BodyWeightMeasurementWindowTest {
                 defaultBodyWeightMeasurement().timestamp(endDate()).build()
         );
 
-        assertThat(measurementWindow.getStartTimestamp()).isEqualTo(startDate());
+        var startTimestamp = measurementWindow.getStartTimestamp();
+
+        assertThat(startTimestamp).isEqualTo(startDate());
     }
 
     @Test
@@ -33,7 +35,9 @@ class BodyWeightMeasurementWindowTest {
                 defaultBodyWeightMeasurement().timestamp(endDate()).build()
         );
 
-        assertThat(measurementWindow.getEndTimestamp()).isEqualTo(endDate());
+        var endTimestamp = measurementWindow.getEndTimestamp();
+
+        assertThat(endTimestamp).isEqualTo(endDate());
     }
 
     @Test
@@ -44,7 +48,9 @@ class BodyWeightMeasurementWindowTest {
                 defaultBodyWeightMeasurement().weight(BigDecimal.valueOf(70L)).build()
         );
 
-        assertThat(measurementWindow.getMinWeight()).isEqualTo(BigDecimal.valueOf(50L));
+        var minWeight = measurementWindow.getMinWeight();
+
+        assertThat(minWeight).isEqualTo(BigDecimal.valueOf(50L));
     }
 
     @Test
@@ -55,7 +61,9 @@ class BodyWeightMeasurementWindowTest {
                 defaultBodyWeightMeasurement().weight(BigDecimal.valueOf(70L)).build()
         );
 
-        assertThat(measurementWindow.getMaxWeight()).isEqualTo(BigDecimal.valueOf(90L));
+        var maxWeight = measurementWindow.getMaxWeight();
+
+        assertThat(maxWeight).isEqualTo(BigDecimal.valueOf(90L));
     }
 
     @ParameterizedTest

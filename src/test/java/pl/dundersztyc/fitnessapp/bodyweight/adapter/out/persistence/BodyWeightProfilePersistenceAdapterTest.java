@@ -60,6 +60,7 @@ public class BodyWeightProfilePersistenceAdapterTest extends AbstractTestcontain
     void shouldLoadBodyWeightProfileFromTo() {
         LocalDateTime from = LocalDateTime.of(2018, 8, 12, 8, 0);
         LocalDateTime to = LocalDateTime.of(2018, 8, 14, 8, 0);
+
         var profile = persistenceAdapter.load(new User.UserId(2L), from, to);
         var measurementWindow = profile.getMeasurementWindow();
 

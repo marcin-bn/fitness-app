@@ -24,9 +24,8 @@ class BmiTest {
     @ParameterizedTest
     @MethodSource("invalidBmiParams")
     void shouldThrowWhenCalculateBmiWithWeightOrHeightLessThanOrEqualTo0(double weightInKg, double heightInM) {
-        assertThrows(ConstraintViolationException.class, () -> {
-           Bmi bmi = new Bmi(Weight.fromKg(weightInKg), Height.fromM(heightInM));
-        });
+        assertThrows(ConstraintViolationException.class,
+                () -> new Bmi(Weight.fromKg(weightInKg), Height.fromM(heightInM)));
     }
 
 

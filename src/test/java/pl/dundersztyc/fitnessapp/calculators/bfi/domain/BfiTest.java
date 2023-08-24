@@ -24,9 +24,8 @@ class BfiTest {
     @ParameterizedTest
     @MethodSource("invalidBfiParams")
     void shouldThrowWhenCalculateBfiWithInvalidParams(Gender gender, long neckCirc, long waistCirc, long hipCirc, Height height) {
-        assertThrows(ConstraintViolationException.class, () -> {
-            Bfi bfi = new Bfi(gender, neckCirc, waistCirc, hipCirc, height);
-        });
+        assertThrows(ConstraintViolationException.class,
+                () -> new Bfi(gender, neckCirc, waistCirc, hipCirc, height));
     }
 
     private static Stream<Arguments> provideInputAndResultForCalculateBfi() {
