@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class BodyWeightProfile {
 
+    @Getter
     private final User.UserId userId;
 
     @Getter

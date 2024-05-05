@@ -37,7 +37,7 @@ class OpenFoodFactsGetProductsByNameHandlerTest extends AbstractIntegrationTest 
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"nonExistingProductName", "abcdef", "abc def"})
+    @ValueSource(strings = {"nonExistingProductName", "abcdef123", "abc def"})
     void shouldReturnEmptyListWhenProductsWithGivenNameDoNotExist(String nonExistingProductName) {
         var products = handler.getProductsByName(nonExistingProductName, 1);
         assertThat(products).isEmpty();
