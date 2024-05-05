@@ -95,6 +95,8 @@ The application has been designed as a modular monolith in hexagonal architectur
 - PostgreSQL
 - Docker
 - Testcontainers
+- JUnit 5
+- Mockito
 - GitHub Actions
 
 ## External APIs used
