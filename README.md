@@ -84,7 +84,7 @@ The application has been designed as a modular monolith in hexagonal architectur
 ![](docs/structure.png)
 
 ## Run
-1. Clone the repository: `git clone https://github.com/dundersztyc10/fitness-app.git`
+1. Clone the repository: `git clone https://github.com/marcin-bn/fitness-app.git`
 2. Navigate to the project directory: `cd fitness-app`
 3. Create and start containers: `docker compose up -d`
 
